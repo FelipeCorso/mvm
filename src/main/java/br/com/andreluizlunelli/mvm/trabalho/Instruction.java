@@ -1,4 +1,4 @@
-package trabalho2;
+package br.com.andreluizlunelli.mvm.trabalho;
 
 public class Instruction {
 

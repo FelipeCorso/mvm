@@ -1,4 +1,4 @@
-package mvm;
+package br.com.andreluizlunelli.mvm;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

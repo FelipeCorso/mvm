@@ -1,4 +1,5 @@
-package trabalho2;
+package br.com.andreluizlunelli.mvm.trabalho;
+
 import java.util.ArrayList;
 import java.util.List;
 
