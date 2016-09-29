@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 public class MVM {
 
     public static int botao = 0;
+//    public string
 
     public static void decodificador(short mem[], int programa, int aux) {
         int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri;
@@ -52,6 +53,8 @@ public class MVM {
             switch (ri) {
                 case 0:// "init ax"
                     System.out.println("init ax");
+                    
+//                    String g = "init ax" // usar um StringBuilder e ou StringBuffer
                     ax = 0;
                     break;
 
