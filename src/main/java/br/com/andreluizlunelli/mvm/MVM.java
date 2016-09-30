@@ -513,136 +513,108 @@ public class MVM {
 	 * 
 	 * @param mem
 	 * @param programa
-	 * @param aux
+	 * @param enderecoDeCarga
 	 * @param programa 
 	 */
-	public static void tradutor(short mem[], int numeroBytes, int aux, int programa) {
+	public static void tradutor(short mem[], int numeroBytes, int enderecoDeCarga, int programa) {
 		int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri;
 		ip = 0;
-		StringBuilder builder = new StringBuilder();
+		StringBuilder strBuilder = new StringBuilder();
 		String traduzido = "";
-		for (int i = 0; i < numeroBytes; i++) {
-			ri = mem[ip];
+		for (int i = enderecoDeCarga; i < numeroBytes+enderecoDeCarga; i++) {
+			ri = mem[i];
 			switch (ri) {
 				case 0:// "init ax"
 					ax = 0;
 					traduzido = "init ax";
-					builder.append(traduzido);
 					break;
 				case 1:// "move ax,bx"
 					ax = bx;
 					traduzido = "move ax,bx";
-					builder.append(traduzido);
 					break;
 				case 2:// "move ax,cx",
 					ax = cx;
 					traduzido = "move ax,cx";
-					builder.append(traduzido);
 					break;
 				case 3:// "move bx,ax"
 					traduzido = "move bx,ax";
 					bx = ax;
-					builder.append(traduzido);
 					break;
 				case 4:// "move cx,ax"
 					cx = ax;
+					traduzido = "move cx,ax";
 					break;
 				case 5:// "move ax,[",
 					ax = mem[mem[ip + 1]];
-					System.out.println("Executou move ax,[" + mem[ip + 1] + "]");
+					traduzido = "move ax,[" + mem[ip + 1] + "]";
 					ip++;
 					break;
-	
 				case 6:// "move ax,[bx+"
 					ax = mem[bx + mem[ip + 1]];
-					System.out.println("Executou move ax, [bx+" + mem[ip + 1] + "]");
+					traduzido = "move ax,[bx+" + mem[ip + 1] + "]";
 					ip++;
 					break;
-	
 				case 7:// "move ax,[bp-"
 					ax = mem[bp - mem[ip + 1]];
-					System.out.println("Executou move ax, [bx-" + mem[ip + 1] + "]");
+					traduzido = "Executou move ax, [bx-" + mem[ip + 1] + "]";
 					ip++;
 					break;
-	
 				case 8:// "move ax,[bp+"
 					ax = mem[bp + mem[ip + 1]];
-					System.out.println("Executou move ax, [bp+" + mem[ip + 1] + "]");
+					traduzido = "Executou move ax, [bp+" + mem[ip + 1] + "]";
 					ip++;
 					break;
 				case 9:// "move ["
 					mem[mem[ip + 1]] = (short) ax;
 					traduzido = "move [" + mem[ip + 1] + "],ax";
-					builder.append(traduzido);
 //					ip++;
 					break;
 				case 10:// "move [bx+"
 					mem[bx + mem[ip + 1]] = (short) ax;
-					System.out.println("Executou move [bx+" + mem[ip + 1] + "],ax");
-					ip++;
+					traduzido = "move [bx+" + mem[ip + 1] + "],ax";
+//					ip++;
 					break;
 				case 11:// "move bp,sp"
-	
 					bp = sp;
-	
+					traduzido = "move bp,sp";
 					break;
-	
 				case 12:// "move sp,bp"
-					System.out.println("move sp,bp");
 					sp = bp;
-	
+					traduzido = "move sp,bp";
 					break;
-	
 				case 13:// "add ax,bx"
-	
 					ax = ax + bx;
-	
+					traduzido = "add ax,bx";
 					break;
-	
 				case 14:// "add ax,cx"
-	
 					ax = ax + cx;
-	
+					traduzido = "add ax,cx";
 					break;
-	
 				case 15:// "add bx,cx"
-	
 					bx = bx + cx;
-	
+					traduzido = "add bx,cx";
 					break;
-	
 				case 16:// "sub ax,bx"
-	
 					ax = ax - bx;
-	
+					traduzido = "sub ax,bx";
 					break;
-	
 				case 17:// "sub ax,cx"
-	
 					ax = ax - cx;
-	
+					traduzido = "sub ax,cx";
 					break;
-	
 				case 18:// "sub bx,cx"
-	
 					bx = bx - cx;
-	
+					traduzido = "sub bx,cx";
 					break;
-	
 				case 19:// "inc ax"
-					traduzido = "inc ax";
 					ax++;
-					builder.append("inc ax");
+					traduzido = "inc ax";
 					break;
-	
 				case 20:// "inc bx"
-					System.out.println("inc bx");
 					bx++;
-	
+					traduzido = "inc bx";
 					break;
-	
 				case 21:// "inc cx"
-	
 					cx++;
 	
 					break;
@@ -670,7 +642,7 @@ public class MVM {
 					System.out.println("test ax0," + mem[ip + 1]);
 					if (ax == 0) {
 	
-						ip = aux + mem[ip + 1] - 1; // -1 para compensar o ip++ no
+						ip = enderecoDeCarga + mem[ip + 1] - 1; // -1 para compensar o ip++ no
 						// laco
 	
 					} else {
@@ -678,23 +650,19 @@ public class MVM {
 						ip++;
 	
 					}
-	
 					break;
-	
 				case 26:// "jmp "
-	
-					ip = aux + mem[ip + 1];
-					System.out.println("jmp ");
+					ip = enderecoDeCarga + mem[ip + 1];
+					traduzido = "jmp "+ip;
 					ip--;
-	
-					break;
-	
+					i++;
+					break;	
 				case 27:// "call"
 					mem[sp] = (short) (ip + 2);
 	
 					sp--;
 	
-					ip = aux + mem[ip + 1];
+					ip = enderecoDeCarga + mem[ip + 1];
 	
 					System.out.println("call " + ip);
 	
@@ -794,7 +762,6 @@ public class MVM {
 	
 				case 40: // "halt"
 					traduzido = "halt";
-					builder.append(traduzido);
 					break;
 				case 41:// "dec sp"
 	
@@ -804,7 +771,7 @@ public class MVM {
 	
 				case 42:// "move [bp-"
 	
-					mem[aux + bp - mem[ip + 1]] = (short) ax;
+					mem[enderecoDeCarga + bp - mem[ip + 1]] = (short) ax;
 	
 					ip++;
 	
@@ -817,7 +784,6 @@ public class MVM {
 				case 44:// "move ax,{"
 					ax = mem[ip + 1];
 					traduzido = "move ax,{" + ax + "}";
-					builder.append(traduzido);
 //					ip++;
 					break;
 	
@@ -923,7 +889,7 @@ public class MVM {
 					mem[sp] = (short) cx;
 					sp--;
 	
-					ip = mem[aux + mem[ip + 1]];
+					ip = mem[enderecoDeCarga + mem[ip + 1]];
 					ip--;
 	
 					break;
@@ -937,10 +903,11 @@ public class MVM {
 					}
 					break;
 			}
-			builder.append(System.getProperty("line.separator"));
+			strBuilder.append(traduzido);
+			strBuilder.append(System.getProperty("line.separator"));
 			ip++;
 		}
 		
-		Arquivo.escreve(new File("programa"+programa+".txt"), builder.toString());
+		Arquivo.escreve(new File("programa"+programa+".txt"), strBuilder.toString());
 	}
 }
