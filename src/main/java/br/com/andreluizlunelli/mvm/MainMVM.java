@@ -36,6 +36,7 @@ public class MainMVM {
 				mem[4 + enderecoDeCarga] = 9;	// move [val], ax
 				mem[5 + enderecoDeCarga] = 2;	// 
 				mem[6 + enderecoDeCarga] = 40;	// halt
+				quantidadeInstrucoes = 7;
 				break;
 			case 2:
 				mem[0 + enderecoDeCarga] = 0;
@@ -45,6 +46,7 @@ public class MainMVM {
 				mem[4 + enderecoDeCarga] = 19;
 				mem[5 + enderecoDeCarga] = 19;
 				mem[6 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 7;
 				break;
 			case 3:
 				mem[0 + enderecoDeCarga] = 0;
@@ -59,6 +61,7 @@ public class MainMVM {
 				mem[9 + enderecoDeCarga] = 26;
 				mem[10 + enderecoDeCarga] = 3;
 				mem[11 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 12;
 				break;
 			case 4:
 				mem[0 + enderecoDeCarga] = 0;
@@ -72,6 +75,7 @@ public class MainMVM {
 				mem[8 + enderecoDeCarga] = 5;
 				mem[9 + enderecoDeCarga] = 15;
 				mem[10 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 11;
 				break;
 			case 5:
 				mem[0 + enderecoDeCarga] = 0;
@@ -83,6 +87,7 @@ public class MainMVM {
 				mem[6 + enderecoDeCarga] = 31;
 				mem[7 + enderecoDeCarga] = 37;
 				mem[8 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 9;
 				break;
 			case 6:
 				mem[0 + enderecoDeCarga] = 0;
@@ -107,6 +112,7 @@ public class MainMVM {
 				mem[19 + enderecoDeCarga] = 6;
 				mem[20 + enderecoDeCarga] = 1;
 				mem[21 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 22;
 				break;
 			case 7:
 				mem[0 + enderecoDeCarga] = 0;
@@ -126,12 +132,14 @@ public class MainMVM {
 				mem[34 + enderecoDeCarga] = 30;
 				mem[35 + enderecoDeCarga] = 38;
 				mem[36 + enderecoDeCarga] = 28;
+				quantidadeInstrucoes = 18;
 				break;
 			case 8:// ex 1.1 e 2.1
 				mem[0 + enderecoDeCarga] = 0;
 				mem[1 + enderecoDeCarga] = 19;
 				mem[2 + enderecoDeCarga] = 19;
 				mem[3 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 4;
 				break;
 			case 9:// ex 1.2
 				mem[0 + enderecoDeCarga] = 0;
@@ -141,6 +149,7 @@ public class MainMVM {
 				mem[4 + enderecoDeCarga] = 9;
 				mem[5 + enderecoDeCarga] = 2;
 				mem[6 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 7;
 				break;
 			case 10:// ex 1.3
 				mem[0 + enderecoDeCarga] = 0;
@@ -154,6 +163,7 @@ public class MainMVM {
 				mem[8 + enderecoDeCarga] = 26;
 				mem[9 + enderecoDeCarga] = 3;
 				mem[10 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 11;
 				break;
 			case 11:// ex 1.4
 				mem[0 + enderecoDeCarga] = 0;
@@ -169,6 +179,7 @@ public class MainMVM {
 				mem[9 + enderecoDeCarga] = 12;
 				// mem[9 + enderecoDeCarga] = 15;
 				mem[10 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 11;
 				break;
 			case 12:// ex 1.5
 				mem[0 + enderecoDeCarga] = 0;
@@ -180,6 +191,7 @@ public class MainMVM {
 				mem[6 + enderecoDeCarga] = 31;
 				mem[7 + enderecoDeCarga] = 37;
 				mem[8 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 9;
 				break;
 			case 13:// ex 1.6
 				mem[0 + enderecoDeCarga] = 0;
@@ -204,6 +216,7 @@ public class MainMVM {
 				mem[19 + enderecoDeCarga] = 6;
 				mem[20 + enderecoDeCarga] = 1;
 				mem[21 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 22;
 				break;
 			case 14:// ex 2.3
 				mem[0 + enderecoDeCarga] = 0;
@@ -215,6 +228,7 @@ public class MainMVM {
 				mem[6 + enderecoDeCarga] = 26;
 				mem[7 + enderecoDeCarga] = 3;
 				mem[8 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 9;
 				break;
 			case 15:// ex 2.4
 				mem[0 + enderecoDeCarga] = 26;
@@ -232,6 +246,7 @@ public class MainMVM {
 				mem[20 + enderecoDeCarga] = 27;
 				mem[21 + enderecoDeCarga] = 10;
 				mem[22 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 16;
 				break;
 			case 16:// ex 2.6
 				mem[0 + enderecoDeCarga] = 26;
@@ -249,6 +264,7 @@ public class MainMVM {
 				mem[20 + enderecoDeCarga] = 27;
 				mem[21 + enderecoDeCarga] = 10;
 				mem[22 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 16;
 				break;
 	
 			case 17: // ex3.1
@@ -279,6 +295,7 @@ public class MainMVM {
 				mem[56 + enderecoDeCarga] = 37;
 				mem[57 + enderecoDeCarga] = 36;
 				mem[58 + enderecoDeCarga] = 28;
+				quantidadeInstrucoes = 27;
 				break;
 			case 18: // ex3.2
 				mem[0 + enderecoDeCarga] = 26;
@@ -311,6 +328,7 @@ public class MainMVM {
 				mem[59 + enderecoDeCarga] = 37;
 				mem[60 + enderecoDeCarga] = 36;
 				mem[61 + enderecoDeCarga] = 28;
+				quantidadeInstrucoes = 30;
 				break;
 			case 19: // ex3.3
 				mem[0 + enderecoDeCarga] = 26;
@@ -347,6 +365,7 @@ public class MainMVM {
 				mem[59 + enderecoDeCarga] = 37;
 				mem[60 + enderecoDeCarga] = 36;
 				mem[61 + enderecoDeCarga] = 28;
+				quantidadeInstrucoes = 34;
 				break;
 			case 20:
 				mem[0 + enderecoDeCarga] = 0;
@@ -366,6 +385,7 @@ public class MainMVM {
 				mem[14 + enderecoDeCarga] = 30;
 				mem[15 + enderecoDeCarga] = 38;
 				mem[16 + enderecoDeCarga] = 28;
+				quantidadeInstrucoes = 18;
 				break;
 			case 21:
 				mem[0 + enderecoDeCarga] = 0;
@@ -400,6 +420,7 @@ public class MainMVM {
 				mem[29 + enderecoDeCarga] = 200;
 				mem[30 + enderecoDeCarga] = 30;
 				mem[31 + enderecoDeCarga] = 51;
+				quantidadeInstrucoes = 33;
 				break;
 			case 22: // prova 1
 				mem[0 + enderecoDeCarga] = 44;
@@ -420,6 +441,7 @@ public class MainMVM {
 				mem[15 + enderecoDeCarga] = 26;
 				mem[16 + enderecoDeCarga] = 0;
 				mem[17 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 19;
 				break;
 			case 23: // exercício PIC
 				mem[0 + enderecoDeCarga] = 44;
@@ -583,6 +605,7 @@ public class MainMVM {
 				mem[158 + enderecoDeCarga] = 202;
 				mem[159 + enderecoDeCarga] = 26;
 				mem[160 + enderecoDeCarga] = 204;
+				quantidadeInstrucoes = 162;
 				break;
 			case 24: // Nucleo de SO
 				mem[0 + enderecoDeCarga] = 26;
@@ -652,11 +675,13 @@ public class MainMVM {
 				mem[224 + enderecoDeCarga] = 74;
 				mem[239 + enderecoDeCarga] = 78;
 				mem[254 + enderecoDeCarga] = 19;
+				quantidadeInstrucoes = 68;
 				break;
 			case 25:
 				mem[0 + enderecoDeCarga] = 26;
 				mem[1 + enderecoDeCarga] = 2;
 				mem[2 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 3;
 				break;
 			case 26:
 				mem[0 + enderecoDeCarga] = 0;
@@ -682,6 +707,7 @@ public class MainMVM {
 				mem[20 + enderecoDeCarga] = 25;
 				mem[21 + enderecoDeCarga] = 10;
 				mem[22 + enderecoDeCarga] = 40;
+				quantidadeInstrucoes = 24;
 				break;
 			case 27:
 				mem[0 + enderecoDeCarga] = 0;
@@ -712,6 +738,7 @@ public class MainMVM {
 				mem[64 + enderecoDeCarga] = 30;
 				mem[65 + enderecoDeCarga] = 38;
 				mem[66 + enderecoDeCarga] = 28;
+				quantidadeInstrucoes = 27;
 				break;
 			default:
 				programa = 0;
@@ -721,12 +748,4 @@ public class MainMVM {
 		MVM.decodificador(mem, programa, enderecoDeCarga);
 	}
 	
-	private static int quantidadeInstrucoes(short mem[]) {
-		for (int i = 0; i < mem.length; i++) {
-			if (mem[i] == 40) {
-				return ++i;
-			}
-		}
-		return 0;
-	}
 }
