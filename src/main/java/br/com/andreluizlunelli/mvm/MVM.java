@@ -614,32 +614,24 @@ public class MVM {
 					break;
 				case 21:// "inc cx"
 					cx++;
-	
+					traduzido = "inc cx";
 					break;
-	
 				case 22:// "dec ax"
-					System.out.println("dec ax");
 					ax--;
-	
+					traduzido = "dec ax";
 					break;
-	
 				case 23:// "dec bx"
-	
 					bx--;
-	
+					traduzido = "dec bx";
 					break;
-	
 				case 24:// "dec cx"
-	
 					cx--;
-	
+					traduzido = "dec cx";
 					break;
-	
 				case 25:// "test ax0,"
-					System.out.println("test ax0," + mem[line + 1]);
+					traduzido = "test ax0," + mem[line + 1];
 					if (ax == 0) {
-						line = enderecoDeCarga + mem[line + 1] - 1; // -1 para compensar o ip++ no
-						// laco
+						line = enderecoDeCarga + mem[line + 1] - 1; // -1 para compensar o line++ no laco
 					} else {
 						line++;
 					}
@@ -647,37 +639,24 @@ public class MVM {
 				case 26:// "jmp "
 					line = enderecoDeCarga + mem[line + 1];
 					traduzido = "jmp "+line;
-					line--;
-					line++;
 					break;	
 				case 27:// "call"
 					mem[sp] = (short) (line + 2);
-	
 					sp--;
-	
 					line = enderecoDeCarga + mem[line + 1];
-	
 					System.out.println("call " + line);
-	
 					line--; // para compensar a alteracao de ip
-	
 					break;
-	
 				case 28:// "ret"
 					System.out.println("ret");
 					sp++;
-	
 					line = mem[sp];
-	
 					line--;
-	
 					break;
-	
 				case 29:// "in ax"
 					ax = Integer.parseInt(JOptionPane.showInputDialog("ax:"));
 					System.out.println("in ax," + ax);
 					break;
-	
 				case 30:// "out ax"
 					System.out.println("Saida: AX=" + ax);
 					break;
