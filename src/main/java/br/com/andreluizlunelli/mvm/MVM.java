@@ -519,6 +519,7 @@ public class MVM {
 		int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ri;
 		StringBuilder strBuilder = new StringBuilder();
 		String traduzido = "";
+		int tmpLine = 0;
 		for (int line = enderecoDeCarga; line < numeroBytes+enderecoDeCarga; line++) {
 			ri = mem[line];
 			switch (ri) {
@@ -637,76 +638,89 @@ public class MVM {
 					}
 					break;
 				case 26:// "jmp "
-					line = enderecoDeCarga + mem[line + 1];
-					traduzido = "jmp "+line;
+					tmpLine = enderecoDeCarga + mem[line + 1];
+					traduzido = "jmp "+tmpLine;
+					line++;
 					break;	
 				case 27:// "call"
 					mem[sp] = (short) (line + 2);
 					sp--;
 					line = enderecoDeCarga + mem[line + 1];
-					System.out.println("call " + line);
+					traduzido = "call " + line;
 					line--; // para compensar a alteracao de ip
 					break;
 				case 28:// "ret"
-					System.out.println("ret");
+					traduzido = "ret";
 					sp++;
 					line = mem[sp];
 					line--;
 					break;
 				case 29:// "in ax"
 					ax = Integer.parseInt(JOptionPane.showInputDialog("ax:"));
-					System.out.println("in ax," + ax);
+					traduzido = "in ax," + ax;
 					break;
 				case 30:// "out ax"
-					System.out.println("Saida: AX=" + ax);
+					traduzido = "AX=" + ax;
 					break;
 				case 31:// "push ax"
-					System.out.println("push ax");
+					traduzido = "push ax";
 					mem[sp] = (short) ax;
 					sp--;
 					break;
 				case 32:// "push bx"
+					traduzido = "push bx"; 
 					mem[sp] = (short) bx;
 					sp--;
 					break;
 				case 33:// "push cx"
+					traduzido = "push cx";
 					mem[sp] = (short) cx;
 					sp--;
 					break;
 				case 34:// "push bp"
+					traduzido = "push bp";
 					mem[sp] = (short) bp;
 					sp--;
 					break;
 				case 35:// "pop bp"
+					traduzido = "pop bp";
 					sp++;
 					bp = mem[sp];
 					break;
 				case 36:// "pop cx"
+					traduzido = "pop cx";
 					sp++;
 					cx = mem[sp];
 					break;
 				case 37:// "pop bx"
+					traduzido = "pop bx";
 					sp++;
 					bx = mem[sp];
 					break;
 				case 38:// "pop ax"
-					System.out.println("pop ax");
+					traduzido = "pop ax";
 					sp++;
 					ax = mem[sp];
 					break;
 				case 39:// "nop"
+					traduzido = "nop";
 					break;
 				case 40: // "halt"
 					traduzido = "halt";
 					break;
 				case 41:// "dec sp"
+					traduzido = "dec sp";
 					sp--;
 					break;
 				case 42:// "move [bp-"
+					traduzido = "move [bp-"+ax+"]";
 					mem[enderecoDeCarga + bp - mem[line + 1]] = (short) ax;
 					line++;
 					break;
 				case 43:// "move [bp+"
+					traduzido = "move [bp+"+ax+"]";
+					mem[enderecoDeCarga + bp + mem[line + 1]] = (short) ax;
+					line++;
 					break;
 				case 44:// "move ax,{"
 					ax = mem[line + 1];
@@ -714,31 +728,35 @@ public class MVM {
 					line++;
 					break;
 				case 45:// "test axEqbx,"
+					traduzido = "test axEqbx,";
 					if (ax == bx) {
 						line = mem[line + 1] - 1;
-						System.out.println("Executou THEN test axEqbx -> ip" + mem[line + 1]);
 					} else {
 						line++;
-						System.out.println("Executou ELSE test axEqbx -> ip" + line);
 					}
 					break;
 				case 46:// "inc sp"
+					traduzido = "inc sp";
 					sp++;
 					break;
 				case 47:// "move ax,sp"
+					traduzido = "move ax,sp";
 					ax = sp;
 					break;
 				case 48:// "move sp,ax"
-					System.out.println("move sp,ax");
+					traduzido = "move sp,ax";
 					sp = ax;
 					break;
 				case 49:// "move ax,bp"
+					traduzido = "move ax,bp";
 					ax = bp;
 					break;
-				case 50:// "move bp,ax,{"
+				case 50:// "move bp,ax"
+					traduzido = "move bp,ax";
 					bp = ax;
 					break;
 				case 51:// "iret"
+					traduzido = "iret";
 					// "pop cx"
 					sp++;
 					cx = mem[sp];
@@ -757,6 +775,7 @@ public class MVM {
 					line--;
 					break;
 				case 52:// "int"
+					traduzido = "int";
 					// "push ip"
 					mem[sp] = (short) (line + 2);
 					sp--;
@@ -779,9 +798,11 @@ public class MVM {
 					bx = bx - ax;
 					break;
 				default: 
+					traduzido = "saiu";
 					System.out.println("Saiu");
 					if (line >= mem.length) {
 						System.out.println("ERRO: a memoria nao pode ser lida");
+						traduzido = "ERRO: a memoria nao pode ser lida";
 					}
 					break;
 			}
