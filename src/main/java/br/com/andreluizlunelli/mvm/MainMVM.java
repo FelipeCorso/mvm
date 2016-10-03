@@ -39,13 +39,13 @@ public class MainMVM {
 				quantidadeInstrucoes = 7;
 				break;
 			case 2:
-				mem[0 + enderecoDeCarga] = 0;
-				mem[1 + enderecoDeCarga] = 19;
-				mem[2 + enderecoDeCarga] = 19;
-				mem[3 + enderecoDeCarga] = 19;
-				mem[4 + enderecoDeCarga] = 19;
-				mem[5 + enderecoDeCarga] = 19;
-				mem[6 + enderecoDeCarga] = 40;
+				mem[0 + enderecoDeCarga] = 0;	// init ax
+				mem[1 + enderecoDeCarga] = 19;	// inc ax
+				mem[2 + enderecoDeCarga] = 19;	// inc ax
+				mem[3 + enderecoDeCarga] = 19;	// inc ax
+				mem[4 + enderecoDeCarga] = 19;	// inc ax
+				mem[5 + enderecoDeCarga] = 19;	// inc ax
+				mem[6 + enderecoDeCarga] = 40;	// halt
 				quantidadeInstrucoes = 7;
 				break;
 			case 3:
