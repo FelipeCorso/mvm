@@ -423,25 +423,25 @@ public class MainMVM {
 				quantidadeInstrucoes = 33;
 				break;
 			case 22: // prova 1
-				mem[0 + enderecoDeCarga] = 44;
-				mem[1 + enderecoDeCarga] = 4;
-				mem[2 + enderecoDeCarga] = 3;
-				mem[3 + enderecoDeCarga] = 44;
+				mem[0 + enderecoDeCarga] = 44;	// move ax,{4}
+				mem[1 + enderecoDeCarga] = 4;	
+				mem[2 + enderecoDeCarga] = 3;	// move bx,ax
+				mem[3 + enderecoDeCarga] = 44;	// move ax,{1}
 				mem[4 + enderecoDeCarga] = 1;
-				mem[5 + enderecoDeCarga] = 19;
-				mem[6 + enderecoDeCarga] = 19;
-				mem[7 + enderecoDeCarga] = 53;
-				mem[8 + enderecoDeCarga] = 1;
-				mem[9 + enderecoDeCarga] = 25;
-				mem[10 + enderecoDeCarga] = 17;
-				mem[11 + enderecoDeCarga] = 44;
+				mem[5 + enderecoDeCarga] = 19;	// inc ax
+				mem[6 + enderecoDeCarga] = 19;	// inc ax
+				mem[7 + enderecoDeCarga] = 53;	// sub bx,ax
+				mem[8 + enderecoDeCarga] = 1;	// move ax,bx
+				mem[9 + enderecoDeCarga] = 25;	// test ax0,17
+				mem[10 + enderecoDeCarga] = 17;	
+				mem[11 + enderecoDeCarga] = 44; // move ax,{3}
 				mem[12 + enderecoDeCarga] = 3;
-				mem[13 + enderecoDeCarga] = 9;
+				mem[13 + enderecoDeCarga] = 9;	// move [1],ax
 				mem[14 + enderecoDeCarga] = 1;
-				mem[15 + enderecoDeCarga] = 26;
+				mem[15 + enderecoDeCarga] = 26;	// jmp 0
 				mem[16 + enderecoDeCarga] = 0;
-				mem[17 + enderecoDeCarga] = 40;
-				quantidadeInstrucoes = 19;
+				mem[17 + enderecoDeCarga] = 40;	// halt
+				quantidadeInstrucoes = 18;
 				break;
 			case 23: // exercício PIC
 				mem[0 + enderecoDeCarga] = 44;

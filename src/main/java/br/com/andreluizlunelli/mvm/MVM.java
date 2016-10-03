@@ -632,7 +632,7 @@ public class MVM {
 				case 25:// "test ax0,"
 					traduzido = "test ax0," + mem[line + 1];
 					if (ax == 0) {
-						line = enderecoDeCarga + mem[line + 1] - 1; // -1 para compensar o line++ no laco
+//						line = enderecoDeCarga + mem[line + 1] - 1; // -1 para compensar o line++ no laco
 					} else {
 						line++;
 					}
