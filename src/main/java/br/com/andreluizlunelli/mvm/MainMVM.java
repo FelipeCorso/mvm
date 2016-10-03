@@ -16,6 +16,16 @@ public class MainMVM {
 
     public static void main(String[] args) {
         short mem[] = new short[1025];
+
+        String message = "Qual ação deseja executar?";
+        String title = "Escolher ação";
+        int optionType = JOptionPane.DEFAULT_OPTION;
+        int messageType = JOptionPane.QUESTION_MESSAGE;
+        Object[] options = { "Executar", "Traduzir" };
+        Object initialValue = options[0];
+
+        int option = JOptionPane.showOptionDialog(null, message, title, optionType, messageType, null, options, initialValue);
+
         int programa = Integer.parseInt(JOptionPane.showInputDialog("Escolha um Programa: "));
         // Botao.main(args, mem);
         int enderecoDeCarga = 50;
@@ -744,8 +754,12 @@ public class MainMVM {
                 programa = 0;
                 break;
         }
-        MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
-        MVM.decodificador(mem, programa, enderecoDeCarga);
+
+        if (option == 0) {
+            MVM.decodificador(mem, programa, enderecoDeCarga);
+        } else {
+            MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
+        }
     }
 
 }
