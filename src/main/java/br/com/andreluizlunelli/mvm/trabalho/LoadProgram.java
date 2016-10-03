@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import br.com.andreluizlunelli.mvm.MVM;
 
 /**
@@ -140,8 +141,8 @@ public class LoadProgram {
                                                                     mem[loadAddress] = 45;
                                                                     loadAddress++;
                                                                     mem[loadAddress] = Short.parseShort(matcher.group(1));
-                                                                }else{
-                                                                	matcher = Pattern.compile(INT).matcher(line);
+                                                                } else {
+                                                                    matcher = Pattern.compile(INT).matcher(line);
                                                                     if (matcher.matches()) {
                                                                         mem[loadAddress] = 52;
                                                                         loadAddress++;

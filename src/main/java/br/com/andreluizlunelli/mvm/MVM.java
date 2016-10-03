@@ -14,471 +14,471 @@ import javax.swing.JOptionPane;
  */
 public class MVM {
 
-	public static int botao = 0;
-	public StringBuilder programaString = new StringBuilder();
-
-	public static void decodificador(short mem[], int programa, int aux) {
-		int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri;
-		boolean repetir = true;
-		ip = 0 + aux;
-		while (repetir) {
-			// System.out.println("Valor de IP: " + ip);
-			if (botao == 1) {
-				// "push ip"
-				mem[sp] = (short) ip;
-				sp--;
-
-				// "push bp"
-				mem[sp] = (short) bp;
-				sp--;
+    public static int botao = 0;
+    public StringBuilder programaString = new StringBuilder();
+
+    public static void decodificador(short mem[], int programa, int aux) {
+        int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri;
+        boolean repetir = true;
+        ip = 0 + aux;
+        while (repetir) {
+            // System.out.println("Valor de IP: " + ip);
+            if (botao == 1) {
+                // "push ip"
+                mem[sp] = (short) ip;
+                sp--;
+
+                // "push bp"
+                mem[sp] = (short) bp;
+                sp--;
 
-				// "push ax"
-				mem[sp] = (short) ax;
-				sp--;
+                // "push ax"
+                mem[sp] = (short) ax;
+                sp--;
 
-				// "push bx"
-				mem[sp] = (short) bx;
-				sp--;
+                // "push bx"
+                mem[sp] = (short) bx;
+                sp--;
 
-				// "push cx"
-				mem[sp] = (short) cx;
-				sp--;
+                // "push cx"
+                mem[sp] = (short) cx;
+                sp--;
 
-				ip = mem[0];
-				botao = 0;
-				System.out.println("EXECUTOU INTERRUPCAO: INT3");
-			}
+                ip = mem[0];
+                botao = 0;
+                System.out.println("EXECUTOU INTERRUPCAO: INT3");
+            }
 
-			ri = mem[ip];
+            ri = mem[ip];
 
-			switch (ri) {
-			case 0:// "init ax"
-				System.out.println("init ax");
-				ax = 0;
-				break;
+            switch (ri) {
+                case 0:// "init ax"
+                    System.out.println("init ax");
+                    ax = 0;
+                    break;
 
-			case 1:// "move ax,bx"
-				ax = bx;
-				break;
-			case 2:// "move ax,cx",
-				ax = cx;
-				break;
+                case 1:// "move ax,bx"
+                    ax = bx;
+                    break;
+                case 2:// "move ax,cx",
+                    ax = cx;
+                    break;
 
-			case 3:// "move bx,ax"
-				System.out.println("move bx,ax");
-				bx = ax;
-				break;
+                case 3:// "move bx,ax"
+                    System.out.println("move bx,ax");
+                    bx = ax;
+                    break;
 
-			case 4:// "move cx,ax"
+                case 4:// "move cx,ax"
 
-				cx = ax;
+                    cx = ax;
 
-				break;
+                    break;
 
-			case 5:// "move ax,[",
-				ax = mem[mem[ip + 1]];
-				System.out.println("Executou move ax,[" + mem[ip + 1] + "]");
-				ip++;
-				break;
+                case 5:// "move ax,[",
+                    ax = mem[mem[ip + 1]];
+                    System.out.println("Executou move ax,[" + mem[ip + 1] + "]");
+                    ip++;
+                    break;
 
-			case 6:// "move ax,[bx+"
-				ax = mem[bx + mem[ip + 1]];
-				System.out.println("Executou move ax, [bx+" + mem[ip + 1] + "]");
-				ip++;
-				break;
+                case 6:// "move ax,[bx+"
+                    ax = mem[bx + mem[ip + 1]];
+                    System.out.println("Executou move ax, [bx+" + mem[ip + 1] + "]");
+                    ip++;
+                    break;
 
-			case 7:// "move ax,[bp-"
-				ax = mem[bp - mem[ip + 1]];
-				System.out.println("Executou move ax, [bx-" + mem[ip + 1] + "]");
-				ip++;
-				break;
+                case 7:// "move ax,[bp-"
+                    ax = mem[bp - mem[ip + 1]];
+                    System.out.println("Executou move ax, [bx-" + mem[ip + 1] + "]");
+                    ip++;
+                    break;
 
-			case 8:// "move ax,[bp+"
-				ax = mem[bp + mem[ip + 1]];
-				System.out.println("Executou move ax, [bp+" + mem[ip + 1] + "]");
-				ip++;
-				break;
+                case 8:// "move ax,[bp+"
+                    ax = mem[bp + mem[ip + 1]];
+                    System.out.println("Executou move ax, [bp+" + mem[ip + 1] + "]");
+                    ip++;
+                    break;
 
-			case 9:// "move ["
-				mem[mem[ip + 1]] = (short) ax;
-				System.out.println("Executou move [" + mem[ip + 1] + "],ax");
-				ip++;
+                case 9:// "move ["
+                    mem[mem[ip + 1]] = (short) ax;
+                    System.out.println("Executou move [" + mem[ip + 1] + "],ax");
+                    ip++;
 
-				break;
+                    break;
 
-			case 10:// "move [bx+"
-				mem[bx + mem[ip + 1]] = (short) ax;
-				System.out.println("Executou move [bx+" + mem[ip + 1] + "],ax");
-				ip++;
+                case 10:// "move [bx+"
+                    mem[bx + mem[ip + 1]] = (short) ax;
+                    System.out.println("Executou move [bx+" + mem[ip + 1] + "],ax");
+                    ip++;
 
-				break;
+                    break;
 
-			case 11:// "move bp,sp"
+                case 11:// "move bp,sp"
 
-				bp = sp;
+                    bp = sp;
 
-				break;
+                    break;
 
-			case 12:// "move sp,bp"
-				System.out.println("move sp,bp");
-				sp = bp;
+                case 12:// "move sp,bp"
+                    System.out.println("move sp,bp");
+                    sp = bp;
 
-				break;
+                    break;
 
-			case 13:// "add ax,bx"
+                case 13:// "add ax,bx"
 
-				ax = ax + bx;
+                    ax = ax + bx;
 
-				break;
+                    break;
 
-			case 14:// "add ax,cx"
+                case 14:// "add ax,cx"
 
-				ax = ax + cx;
+                    ax = ax + cx;
 
-				break;
+                    break;
 
-			case 15:// "add bx,cx"
+                case 15:// "add bx,cx"
 
-				bx = bx + cx;
+                    bx = bx + cx;
 
-				break;
+                    break;
 
-			case 16:// "sub ax,bx"
+                case 16:// "sub ax,bx"
 
-				ax = ax - bx;
+                    ax = ax - bx;
 
-				break;
+                    break;
 
-			case 17:// "sub ax,cx"
+                case 17:// "sub ax,cx"
 
-				ax = ax - cx;
+                    ax = ax - cx;
 
-				break;
+                    break;
 
-			case 18:// "sub bx,cx"
+                case 18:// "sub bx,cx"
 
-				bx = bx - cx;
+                    bx = bx - cx;
 
-				break;
+                    break;
 
-			case 19:// "inc ax"
-				System.out.println("inc ax");
-				ax++;
+                case 19:// "inc ax"
+                    System.out.println("inc ax");
+                    ax++;
 
-				break;
+                    break;
 
-			case 20:// "inc bx"
-				System.out.println("inc bx");
-				bx++;
+                case 20:// "inc bx"
+                    System.out.println("inc bx");
+                    bx++;
 
-				break;
+                    break;
 
-			case 21:// "inc cx"
+                case 21:// "inc cx"
 
-				cx++;
+                    cx++;
 
-				break;
+                    break;
 
-			case 22:// "dec ax"
-				System.out.println("dec ax");
-				ax--;
+                case 22:// "dec ax"
+                    System.out.println("dec ax");
+                    ax--;
 
-				break;
+                    break;
 
-			case 23:// "dec bx"
+                case 23:// "dec bx"
 
-				bx--;
+                    bx--;
 
-				break;
+                    break;
 
-			case 24:// "dec cx"
+                case 24:// "dec cx"
 
-				cx--;
+                    cx--;
 
-				break;
+                    break;
 
-			case 25:// "test ax0,"
+                case 25:// "test ax0,"
 
-				System.out.println("test ax0," + mem[ip + 1]);
-				if (ax == 0) {
+                    System.out.println("test ax0," + mem[ip + 1]);
+                    if (ax == 0) {
 
-					ip = aux + mem[ip + 1] - 1; // -1 para compensar o ip++ no
-					// laco
+                        ip = aux + mem[ip + 1] - 1; // -1 para compensar o ip++ no
+                        // laco
 
-				} else {
+                    } else {
 
-					ip++;
+                        ip++;
 
-				}
+                    }
 
-				break;
+                    break;
 
-			case 26:// "jmp "
+                case 26:// "jmp "
 
-				ip = aux + mem[ip + 1];
-				System.out.println("jmp ");
-				ip--;
+                    ip = aux + mem[ip + 1];
+                    System.out.println("jmp ");
+                    ip--;
 
-				break;
+                    break;
 
-			case 27:// "call"
-				mem[sp] = (short) (ip + 2);
+                case 27:// "call"
+                    mem[sp] = (short) (ip + 2);
 
-				sp--;
+                    sp--;
 
-				ip = aux + mem[ip + 1];
+                    ip = aux + mem[ip + 1];
 
-				System.out.println("call " + ip);
+                    System.out.println("call " + ip);
 
-				ip--; // para compensar a alteracao de ip
+                    ip--; // para compensar a alteracao de ip
 
-				break;
+                    break;
 
-			case 28:// "ret"
-				System.out.println("ret");
-				sp++;
+                case 28:// "ret"
+                    System.out.println("ret");
+                    sp++;
 
-				ip = mem[sp];
+                    ip = mem[sp];
 
-				ip--;
+                    ip--;
 
-				break;
+                    break;
 
-			case 29:// "in ax"
+                case 29:// "in ax"
 
-				ax = Integer.parseInt(JOptionPane.showInputDialog("ax:"));
-				System.out.println("in ax," + ax);
-				break;
+                    ax = Integer.parseInt(JOptionPane.showInputDialog("ax:"));
+                    System.out.println("in ax," + ax);
+                    break;
 
-			case 30:// "out ax"
+                case 30:// "out ax"
 
-				System.out.println("Saida: AX=" + ax);
+                    System.out.println("Saida: AX=" + ax);
 
-				break;
+                    break;
 
-			case 31:// "push ax"
-				System.out.println("push ax");
-				mem[sp] = (short) ax;
+                case 31:// "push ax"
+                    System.out.println("push ax");
+                    mem[sp] = (short) ax;
 
-				sp--;
+                    sp--;
 
-				break;
+                    break;
 
-			case 32:// "push bx"
+                case 32:// "push bx"
 
-				mem[sp] = (short) bx;
+                    mem[sp] = (short) bx;
 
-				sp--;
+                    sp--;
 
-				break;
+                    break;
 
-			case 33:// "push cx"
+                case 33:// "push cx"
 
-				mem[sp] = (short) cx;
+                    mem[sp] = (short) cx;
 
-				sp--;
+                    sp--;
 
-				break;
+                    break;
 
-			case 34:// "push bp"
+                case 34:// "push bp"
 
-				mem[sp] = (short) bp;
+                    mem[sp] = (short) bp;
 
-				sp--;
+                    sp--;
 
-				break;
+                    break;
 
-			case 35:// "pop bp"
+                case 35:// "pop bp"
 
-				sp++;
+                    sp++;
 
-				bp = mem[sp];
+                    bp = mem[sp];
 
-				break;
+                    break;
 
-			case 36:// "pop cx"
+                case 36:// "pop cx"
 
-				sp++;
+                    sp++;
 
-				cx = mem[sp];
+                    cx = mem[sp];
 
-				break;
+                    break;
 
-			case 37:// "pop bx"
+                case 37:// "pop bx"
 
-				sp++;
+                    sp++;
 
-				bx = mem[sp];
+                    bx = mem[sp];
 
-				break;
+                    break;
 
-			case 38:// "pop ax"
-				System.out.println("pop ax");
-				sp++;
+                case 38:// "pop ax"
+                    System.out.println("pop ax");
+                    sp++;
 
-				ax = mem[sp];
+                    ax = mem[sp];
 
-				break;
+                    break;
 
-			case 39:// "nop"
+                case 39:// "nop"
 
-				break;
+                    break;
 
-			case 40: // "halt"
-				System.out.println("halt");
-				repetir = false;
+                case 40: // "halt"
+                    System.out.println("halt");
+                    repetir = false;
 
-				break;
+                    break;
 
-			case 41:// "dec sp"
+                case 41:// "dec sp"
 
-				sp--;
+                    sp--;
 
-				break;
+                    break;
 
-			case 42:// "move [bp-"
+                case 42:// "move [bp-"
 
-				mem[aux + bp - mem[ip + 1]] = (short) ax;
+                    mem[aux + bp - mem[ip + 1]] = (short) ax;
 
-				ip++;
+                    ip++;
 
-				break;
+                    break;
 
-			case 43:// "move [bp+"
+                case 43:// "move [bp+"
 
-				break;
+                    break;
 
-			case 44:// "move ax,{"
-				ax = mem[ip + 1];
-				System.out.println("move ax,{" + ax + "}");
-				ip++;
-				break;
+                case 44:// "move ax,{"
+                    ax = mem[ip + 1];
+                    System.out.println("move ax,{" + ax + "}");
+                    ip++;
+                    break;
 
-			case 45:// "test axEqbx,"
+                case 45:// "test axEqbx,"
 
-				if (ax == bx) {
-					ip = mem[ip + 1] - 1;
-					System.out.println("Executou THEN test axEqbx -> ip" + mem[ip + 1]);
-				} else {
+                    if (ax == bx) {
+                        ip = mem[ip + 1] - 1;
+                        System.out.println("Executou THEN test axEqbx -> ip" + mem[ip + 1]);
+                    } else {
 
-					ip++;
-					System.out.println("Executou ELSE test axEqbx -> ip" + ip);
+                        ip++;
+                        System.out.println("Executou ELSE test axEqbx -> ip" + ip);
 
-				}
+                    }
 
-				break;
+                    break;
 
-			case 46:// "inc sp"
+                case 46:// "inc sp"
 
-				sp++;
+                    sp++;
 
-				break;
+                    break;
 
-			case 47:// "move ax,sp"
+                case 47:// "move ax,sp"
 
-				ax = sp;
+                    ax = sp;
 
-				break;
+                    break;
 
-			case 48:// "move sp,ax"
-				System.out.println("move sp,ax");
-				sp = ax;
+                case 48:// "move sp,ax"
+                    System.out.println("move sp,ax");
+                    sp = ax;
 
-				break;
+                    break;
 
-			case 49:// "move ax,bp"
+                case 49:// "move ax,bp"
 
-				ax = bp;
+                    ax = bp;
 
-				break;
+                    break;
 
-			case 50:// "move bp,ax,{"
+                case 50:// "move bp,ax,{"
 
-				bp = ax;
+                    bp = ax;
 
-				break;
+                    break;
 
-			case 51:// "iret"
+                case 51:// "iret"
 
-				// "pop cx"
+                    // "pop cx"
 
-				sp++;
+                    sp++;
 
-				cx = mem[sp];
+                    cx = mem[sp];
 
-				// "pop bx"
+                    // "pop bx"
 
-				sp++;
+                    sp++;
 
-				bx = mem[sp];
+                    bx = mem[sp];
 
-				// "pop ax"
+                    // "pop ax"
 
-				sp++;
+                    sp++;
 
-				ax = mem[sp];
+                    ax = mem[sp];
 
-				// "pop bp"
+                    // "pop bp"
 
-				sp++;
+                    sp++;
 
-				bp = mem[sp];
+                    bp = mem[sp];
 
-				// "ret"
+                    // "ret"
 
-				sp++;
+                    sp++;
 
-				ip = mem[sp];
+                    ip = mem[sp];
 
-				ip--;
+                    ip--;
 
-				break;
+                    break;
 
-			case 52:// "int"
+                case 52:// "int"
 
-				// "push ip"
-				mem[sp] = (short) (ip + 2);
-				sp--;
+                    // "push ip"
+                    mem[sp] = (short) (ip + 2);
+                    sp--;
 
-				// "push bp"
-				mem[sp] = (short) bp;
-				sp--;
+                    // "push bp"
+                    mem[sp] = (short) bp;
+                    sp--;
 
-				// "push ax"
-				mem[sp] = (short) ax;
-				sp--;
+                    // "push ax"
+                    mem[sp] = (short) ax;
+                    sp--;
 
-				// "push bx"
-				mem[sp] = (short) bx;
-				sp--;
+                    // "push bx"
+                    mem[sp] = (short) bx;
+                    sp--;
 
-				// "push cx"
-				mem[sp] = (short) cx;
-				sp--;
+                    // "push cx"
+                    mem[sp] = (short) cx;
+                    sp--;
 
-				ip = mem[aux + mem[ip + 1]];
-				ip--;
+                    ip = mem[aux + mem[ip + 1]];
+                    ip--;
 
-				break;
-			case 53:// "sub bx,ax"
+                    break;
+                case 53:// "sub bx,ax"
 
-				bx = bx - ax;
+                    bx = bx - ax;
 
-				break;
+                    break;
 
-			default: {
+                default: {
 
-				repetir = false;
+                    repetir = false;
 
-				System.out.println("Saiu");
+                    System.out.println("Saiu");
 
-			}
+                }
 
-				if (ip >= mem.length) {
+                if (ip >= mem.length) {
 
-					System.out.println("ERRO: a memoria nao pode ser lida");
+                    System.out.println("ERRO: a memoria nao pode ser lida");
 
-					repetir = false;
+                    repetir = false;
 
 				}
 
@@ -796,6 +796,7 @@ public class MVM {
 					break;
 				case 53:// "sub bx,ax"
 					bx = bx - ax;
+					traduzido = "sub bx,ax";
 					break;
 				default: 
 					traduzido = "saiu";
@@ -812,4 +813,5 @@ public class MVM {
 		
 		Arquivo.escreve(new File("programa"+programa+".txt"), strBuilder.toString());
 	}
+
 }
