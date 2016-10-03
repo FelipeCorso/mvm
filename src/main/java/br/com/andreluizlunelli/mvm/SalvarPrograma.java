@@ -1,6 +1,5 @@
 package br.com.andreluizlunelli.mvm;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,14 +8,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 /**
  *
- * @author 
+ * @author
  */
 public class SalvarPrograma {
 
@@ -69,24 +67,11 @@ public class SalvarPrograma {
         while (next <= fim) {
             setAux2(mem[next]);
             //Instrução de 2 bytes com posição de memória
-            if (getAux2() == 5
-                    || getAux2() == 6
-                    || getAux2() == 7
-                    || getAux2() == 8
-                    || getAux2() == 9
-                    || getAux2() == 10
-                    || getAux2() == 25
-                    || getAux2() == 26
-                    || getAux2() == 27
-                    || getAux2() == 42
-                    || getAux2() == 43
-                    || getAux2() == 44
-                    || getAux2() == 45
-                    || getAux2() == 52) {
+            if (getAux2() == 5 || getAux2() == 6 || getAux2() == 7 || getAux2() == 8 || getAux2() == 9 || getAux2() == 10 || getAux2() == 25 || getAux2() == 26 || getAux2() == 27 || getAux2() == 42 || getAux2() == 43 || getAux2() == 44 || getAux2() == 45 || getAux2() == 52) {
                 bw.write(getAux2() + "\n");
                 next++;
                 bw.write(mem[next] + "\n");
-                tabelaRealocacao += (next-start) + "\n";
+                tabelaRealocacao += (next - start) + "\n";
             } else {
                 //instruções de 2 bytes com chaves
                 if (getAux2() == 44) {
@@ -114,8 +99,7 @@ public class SalvarPrograma {
         boolean terminouPrograma = false;
         while (br.ready()) {
             aux = br.readLine();
-            if (aux.equals("")) {
-            } else {
+            if (aux.equals("")) {} else {
                 if (aux.equals("|")) {
                     terminouPrograma = true;
                 } else {
@@ -123,9 +107,9 @@ public class SalvarPrograma {
                         mem[posicao] = Short.parseShort(aux);
                         posicao++;
                     } else {
-                        mem[Integer.parseInt(aux)+posicaoIni] += posicaoIni;
+                        mem[Integer.parseInt(aux) + posicaoIni] += posicaoIni;
                     }
-                    
+
                 }
             }
         }
