@@ -50,7 +50,7 @@ public class MVM {
             }
 
             ri = mem[ip];
-
+            System.out.print("ip " + ip + " ");
             switch (ri) {
                 case 0:// "init ax"
                     System.out.println("init ax");
@@ -656,7 +656,6 @@ public class MVM {
                     line--;
                     break;
                 case 29:// "in ax"
-//                    ax = Integer.parseInt(JOptionPane.showInputDialog("ax:"));
                     traduzido = "in ax";
                     break;
                 case 30:// "out ax"

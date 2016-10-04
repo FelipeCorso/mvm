@@ -18,7 +18,7 @@ public class MainMVM {
         short mem[] = new short[1025];
         int programa = Integer.parseInt(JOptionPane.showInputDialog("Escolha um Programa: "));
         // Botao.main(args, mem);
-        int enderecoDeCarga = 50;
+        int enderecoDeCarga = 0;
         int quantidadeInstrucoes = 0;
         switch (programa) {
             case 0:
