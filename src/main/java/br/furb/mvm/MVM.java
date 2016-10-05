@@ -488,10 +488,9 @@ public class MVM {
 
                     }
 
-                    if (!instrucao.equals("") && uiView != null) {
-                        uiView.addProgramLog(instrucao);
-                    }
-
+            }
+            if (!instrucao.equals("") && uiView != null) {
+                uiView.addProgramLog(instrucao);
             }
 
             // System.out.println("Valor de mem[" + ip + "]: " + ri);

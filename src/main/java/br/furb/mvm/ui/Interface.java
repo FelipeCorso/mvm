@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
@@ -89,6 +90,12 @@ public class Interface extends JFrame {
                         loadAddress = Integer.parseInt(txfLoadAddress.getText());
                     }
                     mainMVM.executar(selectedFile, loadAddress);
+                    try {
+                        textPane.setText(programLog.getText(0, programLog.getLength()));
+                    } catch (BadLocationException e1) {
+                        // TODO Auto-generated catch block
+                        throw new RuntimeException(e1);
+                    }
                 }
             }
         });
