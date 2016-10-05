@@ -33,7 +33,7 @@ public class Interface extends JFrame {
     private static final long serialVersionUID = -5095957758803292405L;
     private JPanel contentPane;
     private JTextPane textPane = new JTextPane();
-    private StyledDocument serverLog = textPane.getStyledDocument();
+    private StyledDocument programLog = textPane.getStyledDocument();
     private JTextField txfLoadAddress;
     private JTextField txfProgram;
     private MainMVM mainMVM = new MainMVM();
@@ -130,9 +130,9 @@ public class Interface extends JFrame {
 
     }
 
-    public void addServerLog(String log) {
+    public void addProgramLog(String log) {
         try {
-            serverLog.insertString(serverLog.getLength(), log + "\n", null);
+            programLog.insertString(programLog.getLength(), log + "\n", null);
         } catch (Exception e) {
             System.out.println(e);
         }
