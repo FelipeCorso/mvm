@@ -36,14 +36,13 @@ public class Interface extends JFrame {
     private StyledDocument programLog = textPane.getStyledDocument();
     private JTextField txfLoadAddress;
     private JTextField txfProgram;
-    private MainMVM mainMVM = new MainMVM();
+    private MainMVM mainMVM;
 
     /**
      * Launch the application.
      */
 
     public static void main(String[] args) {
-        //    public void start() {
         EventQueue.invokeLater(new Runnable() {
 
             @Override
@@ -51,6 +50,7 @@ public class Interface extends JFrame {
                 try {
                     Interface frame = new Interface();
                     frame.setVisible(true);
+                    frame.mainMVM = new MainMVM(frame);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

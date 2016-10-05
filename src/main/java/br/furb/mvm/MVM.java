@@ -3,6 +3,8 @@ package br.furb.mvm;
 import java.io.File;
 
 import javax.swing.JOptionPane;
+
+import br.furb.mvm.ui.Interface;
 /*
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
@@ -18,6 +20,10 @@ public class MVM {
     public StringBuilder programaString = new StringBuilder();
 
     public static void decodificador(short mem[], int programa, int aux) {
+        decodificador(mem, programa, aux, null);
+    }
+
+    public static void decodificador(short mem[], int programa, int aux, Interface uiView) {
         int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri;
         boolean repetir = true;
         ip = 0 + aux;
@@ -50,10 +56,10 @@ public class MVM {
             }
 
             ri = mem[ip];
-            System.out.print("ip " + ip + " ");
+            String instrucao = "";
             switch (ri) {
                 case 0:// "init ax"
-                    System.out.println("init ax");
+                    instrucao = "init ax";
                     ax = 0;
                     break;
 
@@ -65,7 +71,7 @@ public class MVM {
                     break;
 
                 case 3:// "move bx,ax"
-                    System.out.println("move bx,ax");
+                    instrucao = "move bx,ax";
                     bx = ax;
                     break;
 
@@ -77,38 +83,38 @@ public class MVM {
 
                 case 5:// "move ax,[",
                     ax = mem[mem[ip + 1]];
-                    System.out.println("Executou move ax,[" + mem[ip + 1] + "]");
+                    instrucao = "Executou move ax,[" + mem[ip + 1] + "]";
                     ip++;
                     break;
 
                 case 6:// "move ax,[bx+"
                     ax = mem[bx + mem[ip + 1]];
-                    System.out.println("Executou move ax, [bx+" + mem[ip + 1] + "]");
+                    instrucao = "Executou move ax, [bx+" + mem[ip + 1] + "]";
                     ip++;
                     break;
 
                 case 7:// "move ax,[bp-"
                     ax = mem[bp - mem[ip + 1]];
-                    System.out.println("Executou move ax, [bx-" + mem[ip + 1] + "]");
+                    instrucao = "Executou move ax, [bx-" + mem[ip + 1] + "]";
                     ip++;
                     break;
 
                 case 8:// "move ax,[bp+"
                     ax = mem[bp + mem[ip + 1]];
-                    System.out.println("Executou move ax, [bp+" + mem[ip + 1] + "]");
+                    instrucao = "Executou move ax, [bp+" + mem[ip + 1] + "]";
                     ip++;
                     break;
 
                 case 9:// "move ["
                     mem[mem[ip + 1]] = (short) ax;
-                    System.out.println("Executou move [" + mem[ip + 1] + "],ax");
+                    instrucao = "Executou move [" + mem[ip + 1] + "],ax";
                     ip++;
 
                     break;
 
                 case 10:// "move [bx+"
                     mem[bx + mem[ip + 1]] = (short) ax;
-                    System.out.println("Executou move [bx+" + mem[ip + 1] + "],ax");
+                    instrucao = "Executou move [bx+" + mem[ip + 1] + "],ax";
                     ip++;
 
                     break;
@@ -120,7 +126,7 @@ public class MVM {
                     break;
 
                 case 12:// "move sp,bp"
-                    System.out.println("move sp,bp");
+                    instrucao = "move sp,bp";
                     sp = bp;
 
                     break;
@@ -162,13 +168,13 @@ public class MVM {
                     break;
 
                 case 19:// "inc ax"
-                    System.out.println("inc ax");
+                    instrucao = "inc ax";
                     ax++;
 
                     break;
 
                 case 20:// "inc bx"
-                    System.out.println("inc bx");
+                    instrucao = "inc bx";
                     bx++;
 
                     break;
@@ -180,7 +186,7 @@ public class MVM {
                     break;
 
                 case 22:// "dec ax"
-                    System.out.println("dec ax");
+                    instrucao = "dec ax";
                     ax--;
 
                     break;
@@ -199,7 +205,7 @@ public class MVM {
 
                 case 25:// "test ax0,"
 
-                    System.out.println("test ax0," + mem[ip + 1]);
+                    instrucao = "test ax0," + mem[ip + 1];
                     if (ax == 0) {
 
                         ip = aux + mem[ip + 1] - 1; // -1 para compensar o ip++ no
@@ -216,7 +222,7 @@ public class MVM {
                 case 26:// "jmp "
 
                     ip = aux + mem[ip + 1];
-                    System.out.println("jmp ");
+                    instrucao = "jmp ";
                     ip--;
 
                     break;
@@ -228,14 +234,14 @@ public class MVM {
 
                     ip = aux + mem[ip + 1];
 
-                    System.out.println("call " + ip);
+                    instrucao = "call " + ip;
 
                     ip--; // para compensar a alteracao de ip
 
                     break;
 
                 case 28:// "ret"
-                    System.out.println("ret");
+                    instrucao = "ret";
                     sp++;
 
                     ip = mem[sp];
@@ -247,17 +253,17 @@ public class MVM {
                 case 29:// "in ax"
 
                     ax = Integer.parseInt(JOptionPane.showInputDialog("ax:"));
-                    System.out.println("in ax," + ax);
+                    instrucao = "in ax," + ax;
                     break;
 
                 case 30:// "out ax"
 
-                    System.out.println("Saida: AX=" + ax);
+                    instrucao = "Saida: AX=" + ax;
 
                     break;
 
                 case 31:// "push ax"
-                    System.out.println("push ax");
+                    instrucao = "push ax";
                     mem[sp] = (short) ax;
 
                     sp--;
@@ -313,7 +319,7 @@ public class MVM {
                     break;
 
                 case 38:// "pop ax"
-                    System.out.println("pop ax");
+                    instrucao = "pop ax";
                     sp++;
 
                     ax = mem[sp];
@@ -325,7 +331,7 @@ public class MVM {
                     break;
 
                 case 40: // "halt"
-                    System.out.println("halt");
+                    instrucao = "halt";
                     repetir = false;
 
                     break;
@@ -350,7 +356,7 @@ public class MVM {
 
                 case 44:// "move ax,{"
                     ax = mem[ip + 1];
-                    System.out.println("move ax,{" + ax + "}");
+                    instrucao = "move ax,{" + ax + "}";
                     ip++;
                     break;
 
@@ -358,11 +364,11 @@ public class MVM {
 
                     if (ax == bx) {
                         ip = mem[ip + 1] - 1;
-                        System.out.println("Executou THEN test axEqbx -> ip" + mem[ip + 1]);
+                        instrucao = "Executou THEN test axEqbx -> ip" + mem[ip + 1];
                     } else {
 
                         ip++;
-                        System.out.println("Executou ELSE test axEqbx -> ip" + ip);
+                        instrucao = "Executou ELSE test axEqbx -> ip" + ip;
 
                     }
 
@@ -381,7 +387,7 @@ public class MVM {
                     break;
 
                 case 48:// "move sp,ax"
-                    System.out.println("move sp,ax");
+                    instrucao = "move sp,ax";
                     sp = ax;
 
                     break;
@@ -470,16 +476,20 @@ public class MVM {
 
                     repetir = false;
 
-                    System.out.println("Saiu");
+                    instrucao = "Saiu";
 
                 }
 
                     if (ip >= mem.length) {
 
-                        System.out.println("ERRO: a memoria nao pode ser lida");
+                        instrucao = "ERRO: a memoria nao pode ser lida";
 
                         repetir = false;
 
+                    }
+
+                    if (!instrucao.equals("") && uiView != null) {
+                        uiView.addProgramLog(instrucao);
                     }
 
             }
@@ -516,6 +526,10 @@ public class MVM {
      * @param programa
      */
     public static void tradutor(short mem[], int numeroBytes, int enderecoDeCarga, int programa) {
+        tradutor(mem, numeroBytes, enderecoDeCarga, programa, null);
+    }
+
+    public static void tradutor(short mem[], int numeroBytes, int enderecoDeCarga, int programa, Interface uiView) {
         int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ri;
         StringBuilder strBuilder = new StringBuilder();
         String traduzido = "";
@@ -805,6 +819,9 @@ public class MVM {
                         traduzido = "ERRO: a memoria nao pode ser lida";
                     }
                     break;
+            }
+            if (uiView != null) {
+                uiView.addProgramLog(traduzido);
             }
             strBuilder.append(traduzido);
             strBuilder.append(System.getProperty("line.separator"));

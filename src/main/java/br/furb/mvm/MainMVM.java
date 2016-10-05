@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import br.furb.mvm.trabalho.LoadProgram;
+import br.furb.mvm.ui.Interface;
 
 /*
  * To change this template, choose Tools | Templates and open the template in
@@ -18,6 +19,12 @@ import br.furb.mvm.trabalho.LoadProgram;
  */
 public class MainMVM {
 
+    private Interface uiView;
+
+    public MainMVM(Interface uiView) {
+        this.uiView = uiView;
+    }
+
     public void executar(File file, int loadAddress) {
         try {
             short mem[] = new short[1025];
@@ -25,7 +32,7 @@ public class MainMVM {
             BufferedReader bufferFileSrc = main.readFile(file);
             mem = main.readLines(bufferFileSrc, loadAddress);
             bufferFileSrc.close();
-            MVM.decodificador(mem, 0, loadAddress);
+            MVM.decodificador(mem, 0, loadAddress, uiView);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -759,7 +766,7 @@ public class MainMVM {
                 programa = 0;
                 break;
         }
-        MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
+        MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa, uiView);
     }
 
 }
