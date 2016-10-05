@@ -1,4 +1,4 @@
-package br.com.andreluizlunelli.mvm.trabalho;
+package br.furb.mvm.trabalho;
 
 import java.util.ArrayList;
 import java.util.List;

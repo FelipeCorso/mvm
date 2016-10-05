@@ -1,6 +1,11 @@
-package br.com.andreluizlunelli.mvm;
+package br.furb.mvm;
 
-import javax.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+
+import br.furb.mvm.trabalho.LoadProgram;
+import br.furb.mvm.ui.Interface;
 
 /*
  * To change this template, choose Tools | Templates and open the template in
@@ -14,11 +19,28 @@ import javax.swing.JOptionPane;
  */
 public class MainMVM {
 
-    public static void main(String[] args) {
+    private Interface uiView;
+
+    public MainMVM(Interface uiView) {
+        this.uiView = uiView;
+    }
+
+    public void executar(File file, int loadAddress) {
+        try {
+            short mem[] = new short[1025];
+            LoadProgram main = new LoadProgram();
+            BufferedReader bufferFileSrc = main.readFile(file);
+            mem = main.readLines(bufferFileSrc, loadAddress);
+            bufferFileSrc.close();
+            MVM.decodificador(mem, 0, loadAddress, uiView);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void traduzir(int programa, int enderecoCarga) {
         short mem[] = new short[1025];
-        int programa = Integer.parseInt(JOptionPane.showInputDialog("Escolha um Programa: "));
-        // Botao.main(args, mem);
-        int enderecoDeCarga = 50;
+        int enderecoDeCarga = enderecoCarga;
         int quantidadeInstrucoes = 0;
         switch (programa) {
             case 0:
@@ -744,8 +766,7 @@ public class MainMVM {
                 programa = 0;
                 break;
         }
-        MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
-        MVM.decodificador(mem, programa, enderecoDeCarga);
+        MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa, uiView);
     }
 
 }

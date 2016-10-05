@@ -1,4 +1,4 @@
-package br.com.andreluizlunelli.mvm.trabalho;
+package br.furb.mvm.trabalho;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,54 +8,36 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.com.andreluizlunelli.mvm.MVM;
-
 /**
  * 
  * @author felipe.corso
  */
 public class LoadProgram {
 
-    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION = "move ax,\\[(\\d)\\]"; // move ax,[
-    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION_BX_PLUS = "move ax,\\[bx\\+(\\d)\\]";// move ax,[bx+
-    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_MINUS = "move ax,\\[bp\\-(\\d)\\]";// move ax,[bp-
-    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_PLUS = "move ax,\\[bp\\+(\\d)\\]";// move ax,[bp+
-    private static final String MOVE_AX_TO_MEMORY_POSITION = "move \\[(\\d)\\],ax";// move [
-    private static final String MOVE_AX_TO_MEMORY_POSITION_BX_PLUS = "move \\[bx\\+(\\d)\\],ax";// move [bx+
-    private static final String TEST_AX0 = "test ax0,(\\d)";// test ax0,
-    private static final String JMP = "jmp (\\d)";// jmp
-    private static final String CALL = "call (\\d)";// call
-    private static final String MOVE_AX_TO_MEMORY_POSITION_BP_MINUS = "move \\[bp\\-(\\d)\\],ax";// move [bp-3], ax
-    private static final String MOVE_AX_TO_MEMORY_POSITION_BP_PLUS = "move \\[bp\\+(\\d)\\],ax";// move [bp+3], ax
-    private static final String MOVE_TO_AX_VALUE = "move ax,\\{(\\d)\\}";// move ax,{
-    private static final String TEST_AX_EQ_BX = "test axEqbx,(\\d)";// test axEqbx,
-    private static final String INT = "int (\\d)";// int
+    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION = "move ax,\\[(\\d+)\\]"; // move ax,[
+    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION_BX_PLUS = "move ax,\\[bx\\+(\\d+)\\]";// move ax,[bx+
+    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_MINUS = "move ax,\\[bp\\-(\\d+)\\]";// move ax,[bp-
+    private static final String MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_PLUS = "move ax,\\[bp\\+(\\d+)\\]";// move ax,[bp+
+    private static final String MOVE_AX_TO_MEMORY_POSITION = "move \\[(\\d+)\\],ax";// move [
+    private static final String MOVE_AX_TO_MEMORY_POSITION_BX_PLUS = "move \\[bx\\+(\\d+)\\],ax";// move [bx+
+    private static final String TEST_AX0 = "test ax0,(\\d+)";// test ax0,
+    private static final String JMP = "jmp (\\d+)";// jmp
+    private static final String CALL = "call (\\d+)";// call
+    private static final String MOVE_AX_TO_MEMORY_POSITION_BP_MINUS = "move \\[bp\\-(\\d+)\\],ax";// move [bp-3], ax
+    private static final String MOVE_AX_TO_MEMORY_POSITION_BP_PLUS = "move \\[bp\\+(\\d+)\\],ax";// move [bp+3], ax
+    private static final String MOVE_TO_AX_VALUE = "move ax,\\{(\\d+)\\}";// move ax,{
+    private static final String TEST_AX_EQ_BX = "test axEqbx,(\\d+)";// test axEqbx,
+    private static final String INT = "int (\\d+)";// int
 
     private Instructions instructions = new Instructions();
-
-    public static void main(String[] args) {
-        try {
-            short mem[] = new short[1025];
-
-            LoadProgram main = new LoadProgram();
-            String path = "C:/Users/fcorso/Downloads/SO_EX1.txt";
-            File file = new File(path);
-            BufferedReader bufferFileSrc = main.readFile(file);
-            mem = main.readLines(bufferFileSrc);
-            bufferFileSrc.close();
-            MVM.decodificador(mem, 0, 0);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public BufferedReader readFile(File file) throws FileNotFoundException, IOException {
         return new BufferedReader(new FileReader(file));
     }
 
-    public short[] readLines(BufferedReader src) throws IOException {
+    public short[] readLines(BufferedReader src, int enderecoCarga) throws IOException {
         short mem[] = new short[1025];
-        int loadAddress = 0;
+        int loadAddress = 0 + enderecoCarga;
         String line;
         while ((line = src.readLine()) != null) {
             line = line.trim();

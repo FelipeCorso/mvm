@@ -1,4 +1,4 @@
-package br.com.andreluizlunelli.mvm;
+package br.furb.mvm;
 
 import java.io.File;
 
@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.furb.mvm.Arquivo;
 import junit.framework.Assert;
 
 public class EscreveArquivoTest {
