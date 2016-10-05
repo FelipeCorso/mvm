@@ -492,6 +492,7 @@ public class MVM {
 
             }
             if (!instrucao.equals("") && uiView != null) {
+                System.out.println(instrucao);
                 uiView.addProgramLog(instrucao);
             }
 
