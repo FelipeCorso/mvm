@@ -38,9 +38,9 @@ public class MainMVM {
         }
     }
 
-    public void traduzir(int programa) {
+    public void traduzir(int programa, int enderecoCarga) {
         short mem[] = new short[1025];
-        int enderecoDeCarga = 0;
+        int enderecoDeCarga = enderecoCarga;
         int quantidadeInstrucoes = 0;
         switch (programa) {
             case 0:
