@@ -1,4 +1,4 @@
-package br.com.andreluizlunelli.mvm.mvm;
+package br.furb.mvm.mvm;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

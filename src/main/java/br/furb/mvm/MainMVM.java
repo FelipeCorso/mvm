@@ -1,4 +1,4 @@
-package br.com.andreluizlunelli.mvm;
+package br.furb.mvm;
 
 import javax.swing.JOptionPane;
 

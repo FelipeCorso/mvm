@@ -1,4 +1,4 @@
-package br.com.andreluizlunelli.mvm.trabalho;
+package br.furb.mvm.trabalho;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.com.andreluizlunelli.mvm.MVM;
+import br.furb.mvm.MVM;
 
 /**
  * 
