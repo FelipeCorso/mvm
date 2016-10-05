@@ -1,6 +1,10 @@
 package br.furb.mvm;
 
-import javax.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+
+import br.furb.mvm.trabalho.LoadProgram;
 
 /*
  * To change this template, choose Tools | Templates and open the template in
@@ -14,10 +18,21 @@ import javax.swing.JOptionPane;
  */
 public class MainMVM {
 
-    public static void main(String[] args) {
+    public void executar(File file, int loadAddress) {
+        try {
+            short mem[] = new short[1025];
+            LoadProgram main = new LoadProgram();
+            BufferedReader bufferFileSrc = main.readFile(file);
+            mem = main.readLines(bufferFileSrc, loadAddress);
+            bufferFileSrc.close();
+            MVM.decodificador(mem, 0, loadAddress);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void traduzir(int programa) {
         short mem[] = new short[1025];
-        int programa = Integer.parseInt(JOptionPane.showInputDialog("Escolha um Programa: "));
-        // Botao.main(args, mem);
         int enderecoDeCarga = 0;
         int quantidadeInstrucoes = 0;
         switch (programa) {
@@ -745,7 +760,6 @@ public class MainMVM {
                 break;
         }
         MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
-        MVM.decodificador(mem, programa, enderecoDeCarga);
     }
 
 }

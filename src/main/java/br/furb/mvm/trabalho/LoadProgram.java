@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.furb.mvm.MVM;
-
 /**
  * 
  * @author felipe.corso
@@ -32,36 +30,6 @@ public class LoadProgram {
     private static final String INT = "int (\\d+)";// int
 
     private Instructions instructions = new Instructions();
-
-    //    public static void main(String[] args) {
-    //        try {
-    //            short mem[] = new short[1025];
-    //
-    //            LoadProgram main = new LoadProgram();
-    //            String path = "C:/Users/fcorso/Downloads/SO_EX1.txt";
-    //            File file = new File(path);
-    //            BufferedReader bufferFileSrc = main.readFile(file);
-    //            mem = main.readLines(bufferFileSrc);
-    //            bufferFileSrc.close();
-    //            MVM.decodificador(mem, 0, 0);
-    //        } catch (IOException e) {
-    //            throw new RuntimeException(e);
-    //        }
-    //    }
-
-    public static void _run(String path, int enderecoCarga) {
-        try {
-            short mem[] = new short[1025];
-            LoadProgram main = new LoadProgram();
-            File file = new File(path);
-            BufferedReader bufferFileSrc = main.readFile(file);
-            mem = main.readLines(bufferFileSrc, enderecoCarga);
-            bufferFileSrc.close();
-            MVM.decodificador(mem, 0, enderecoCarga);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public BufferedReader readFile(File file) throws FileNotFoundException, IOException {
         return new BufferedReader(new FileReader(file));

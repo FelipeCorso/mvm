@@ -1,0 +1,147 @@
+package br.furb.mvm.ui;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.StyledDocument;
+
+import br.furb.mvm.MainMVM;
+
+public class Interface extends JFrame {
+
+    private static final int INVALID_PROGRAM = -1;
+    private static final long serialVersionUID = -5095957758803292405L;
+    private JPanel contentPane;
+    private JTextPane textPane = new JTextPane();
+    private StyledDocument serverLog = textPane.getStyledDocument();
+    private JTextField txfLoadAddress;
+    private JTextField txfProgram;
+    private MainMVM mainMVM = new MainMVM();
+
+    /**
+     * Launch the application.
+     */
+
+    public static void main(String[] args) {
+        //    public void start() {
+        EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Interface frame = new Interface();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     * 
+     * @param serverTime
+     */
+
+    public Interface() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 600, 400);
+
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        JMenu mnFile = new JMenu("Arquivo");
+        menuBar.add(mnFile);
+
+        JMenuItem mntmExecute = new JMenuItem("Executar");
+        mntmExecute.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    int loadAddress = 0;
+                    if (!txfLoadAddress.getText().equals("")) {
+                        loadAddress = Integer.parseInt(txfLoadAddress.getText());
+                    }
+                    mainMVM.executar(selectedFile, loadAddress);
+                }
+            }
+        });
+        mnFile.add(mntmExecute);
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+
+        JLabel lblLoadAddress = new JLabel("Endereço de carga:");
+
+        DefaultCaret caret = (DefaultCaret) textPane.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+        JScrollPane scrollPane = new JScrollPane();
+
+        txfLoadAddress = new JTextField();
+        txfLoadAddress.setColumns(10);
+
+        JLabel lblProgram = new JLabel("Programa:");
+
+        txfProgram = new JTextField();
+        txfProgram.setColumns(10);
+
+        JButton btnTranslate = new JButton("Traduzir");
+        btnTranslate.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mainMVM.traduzir(getProgram());
+            }
+        });
+        GroupLayout gl_contentPane = new GroupLayout(contentPane);
+        gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING).addGroup(gl_contentPane.createSequentialGroup().addContainerGap().addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE).addGroup(gl_contentPane.createSequentialGroup().addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(lblLoadAddress, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE).addComponent(lblProgram)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane.createSequentialGroup().addComponent(txfProgram, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnTranslate)).addComponent(txfLoadAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))).addContainerGap()));
+        gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane.createSequentialGroup().addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblLoadAddress).addComponent(txfLoadAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblProgram).addComponent(txfProgram, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnTranslate)).addPreferredGap(ComponentPlacement.RELATED).addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)));
+        scrollPane.setViewportView(textPane);
+
+        textPane.setEditable(false);
+        contentPane.setLayout(gl_contentPane);
+
+    }
+
+    public void addServerLog(String log) {
+        try {
+            serverLog.insertString(serverLog.getLength(), log + "\n", null);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public int getProgram() {
+        if (!txfProgram.getText().equals("")) {
+            return Integer.parseInt(txfProgram.getText());
+        }
+        return INVALID_PROGRAM;
+    }
+}
