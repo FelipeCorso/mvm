@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
+import br.furb.mvm.Arquivo;
 import br.furb.mvm.MainMVM;
 
 public class Interface extends JFrame {
@@ -117,7 +118,8 @@ public class Interface extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                mainMVM.traduzir(getProgram());
+                mainMVM.traduzir(getProgram(), getEnderecoCarga());
+                textPane.setText(Arquivo.le(new File("programa" + getProgram() + ".txt")));
             }
         });
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -143,5 +145,12 @@ public class Interface extends JFrame {
             return Integer.parseInt(txfProgram.getText());
         }
         return INVALID_PROGRAM;
+    }
+
+    public int getEnderecoCarga() {
+        if (!txfLoadAddress.getText().equals("")) {
+            return Integer.parseInt(txfLoadAddress.getText());
+        }
+        return 0;
     }
 }
