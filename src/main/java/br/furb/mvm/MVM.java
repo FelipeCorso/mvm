@@ -64,9 +64,11 @@ public class MVM {
                     break;
 
                 case 1:// "move ax,bx"
+                    instrucao = "move ax,bx";
                     ax = bx;
                     break;
                 case 2:// "move ax,cx",
+                    instrucao = "move ax,cx";
                     ax = cx;
                     break;
 
@@ -76,7 +78,7 @@ public class MVM {
                     break;
 
                 case 4:// "move cx,ax"
-
+                    instrucao = "move cx,ax";
                     cx = ax;
 
                     break;
@@ -120,7 +122,7 @@ public class MVM {
                     break;
 
                 case 11:// "move bp,sp"
-
+                    instrucao = "move bp,sp";
                     bp = sp;
 
                     break;
@@ -132,37 +134,37 @@ public class MVM {
                     break;
 
                 case 13:// "add ax,bx"
-
+                    instrucao = "add ax,bx";
                     ax = ax + bx;
 
                     break;
 
                 case 14:// "add ax,cx"
-
+                    instrucao = "add ax,cx";
                     ax = ax + cx;
 
                     break;
 
                 case 15:// "add bx,cx"
-
+                    instrucao = "add bx,cx";
                     bx = bx + cx;
 
                     break;
 
                 case 16:// "sub ax,bx"
-
+                    instrucao = "sub ax,bx";
                     ax = ax - bx;
 
                     break;
 
                 case 17:// "sub ax,cx"
-
+                    instrucao = "sub ax,cx";
                     ax = ax - cx;
 
                     break;
 
                 case 18:// "sub bx,cx"
-
+                    instrucao = "sub bx,cx";
                     bx = bx - cx;
 
                     break;
@@ -180,7 +182,7 @@ public class MVM {
                     break;
 
                 case 21:// "inc cx"
-
+                    instrucao = "inc cx";
                     cx++;
 
                     break;
@@ -192,13 +194,13 @@ public class MVM {
                     break;
 
                 case 23:// "dec bx"
-
+                    instrucao = "dec bx";
                     bx--;
 
                     break;
 
                 case 24:// "dec cx"
-
+                    instrucao = "dec cx";
                     cx--;
 
                     break;
@@ -271,7 +273,7 @@ public class MVM {
                     break;
 
                 case 32:// "push bx"
-
+                    instrucao = "push bx";
                     mem[sp] = (short) bx;
 
                     sp--;
@@ -279,7 +281,7 @@ public class MVM {
                     break;
 
                 case 33:// "push cx"
-
+                    instrucao = "push cx";
                     mem[sp] = (short) cx;
 
                     sp--;
@@ -287,7 +289,7 @@ public class MVM {
                     break;
 
                 case 34:// "push bp"
-
+                    instrucao = "push bp";
                     mem[sp] = (short) bp;
 
                     sp--;
@@ -295,7 +297,7 @@ public class MVM {
                     break;
 
                 case 35:// "pop bp"
-
+                    instrucao = "pop bp";
                     sp++;
 
                     bp = mem[sp];
@@ -303,7 +305,7 @@ public class MVM {
                     break;
 
                 case 36:// "pop cx"
-
+                    instrucao = "pop cx";
                     sp++;
 
                     cx = mem[sp];
@@ -311,7 +313,7 @@ public class MVM {
                     break;
 
                 case 37:// "pop bx"
-
+                    instrucao = "pop bx";
                     sp++;
 
                     bx = mem[sp];
@@ -327,7 +329,7 @@ public class MVM {
                     break;
 
                 case 39:// "nop"
-
+                    instrucao = "nop";
                     break;
 
                 case 40: // "halt"
@@ -337,13 +339,13 @@ public class MVM {
                     break;
 
                 case 41:// "dec sp"
-
+                    instrucao = "dec sp";
                     sp--;
 
                     break;
 
                 case 42:// "move [bp-"
-
+                    instrucao = "move [bp-";
                     mem[aux + bp - mem[ip + 1]] = (short) ax;
 
                     ip++;
@@ -351,7 +353,7 @@ public class MVM {
                     break;
 
                 case 43:// "move [bp+"
-
+                    instrucao = "move [bp+";
                     break;
 
                 case 44:// "move ax,{"
@@ -375,13 +377,13 @@ public class MVM {
                     break;
 
                 case 46:// "inc sp"
-
+                    instrucao = "inc sp";
                     sp++;
 
                     break;
 
                 case 47:// "move ax,sp"
-
+                    instrucao = "move ax,sp";
                     ax = sp;
 
                     break;
@@ -393,19 +395,19 @@ public class MVM {
                     break;
 
                 case 49:// "move ax,bp"
-
+                    instrucao = "move ax,bp";
                     ax = bp;
 
                     break;
 
                 case 50:// "move bp,ax,{"
-
+                    instrucao = "move bp,ax";
                     bp = ax;
 
                     break;
 
                 case 51:// "iret"
-
+                    instrucao = "iret";
                     // "pop cx"
 
                     sp++;
@@ -441,7 +443,7 @@ public class MVM {
                     break;
 
                 case 52:// "int"
-
+                    instrucao = "int";
                     // "push ip"
                     mem[sp] = (short) (ip + 2);
                     sp--;
@@ -467,7 +469,7 @@ public class MVM {
 
                     break;
                 case 53:// "sub bx,ax"
-
+                    instrucao = "sub bx,ax";
                     bx = bx - ax;
 
                     break;
