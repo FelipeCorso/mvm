@@ -832,4 +832,357 @@ public class MVM {
         Arquivo.escreve(new File("programa" + programa + ".txt"), strBuilder.toString());
     }
 
+    public static void gerarClock(short[] mem, int quantidadeInstrucoes, int enderecoDeCarga, int programa) {
+        int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ri;
+        StringBuilder strBuilder = new StringBuilder();
+        String traduzido = "";
+        int tmpLine = 0;
+        int clock = 0;
+        for (int line = enderecoDeCarga; line < quantidadeInstrucoes + enderecoDeCarga; line++) {
+            ri = mem[line];
+            switch (ri) {
+                case 0:// "init ax"
+                    ax = 0;
+                    traduzido = "init ax";
+                    clock++;
+                    break;
+                case 1:// "move ax,bx"
+                    ax = bx;
+                    traduzido = "move ax,bx";
+                    clock++;
+                    break;
+                case 2:// "move ax,cx",
+                    ax = cx;
+                    traduzido = "move ax,cx";
+                    clock++;
+                    break;
+                case 3:// "move bx,ax"
+                    traduzido = "move bx,ax";
+                    bx = ax;
+                    clock++;
+                    break;
+                case 4:// "move cx,ax"
+                    cx = ax;
+                    traduzido = "move cx,ax";
+                    clock++;
+                    break;
+                case 5:// "move ax,[",
+                    ax = mem[mem[line + 1]];
+                    traduzido = "move ax,[" + mem[line + 1] + "]";
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 6:// "move ax,[bx+"
+                    ax = mem[bx + mem[line + 1]];
+                    traduzido = "move ax,[bx+" + mem[line + 1] + "]";
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 7:// "move ax,[bp-"
+                    ax = mem[bp - mem[line + 1]];
+                    traduzido = "Executou move ax, [bx-" + mem[line + 1] + "]";
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 8:// "move ax,[bp+"
+                    ax = mem[bp + mem[line + 1]];
+                    traduzido = "Executou move ax, [bp+" + mem[line + 1] + "]";
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 9:// "move ["
+                    mem[mem[line + 1]] = (short) ax;
+                    traduzido = "move [" + mem[line + 1] + "],ax";
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 10:// "move [bx+"
+                    mem[bx + mem[line + 1]] = (short) ax;
+                    traduzido = "move [bx+" + mem[line + 1] + "],ax";
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 11:// "move bp,sp"
+                    bp = sp;
+                    traduzido = "move bp,sp";
+                    clock++;
+                    break;
+                case 12:// "move sp,bp"
+                    sp = bp;
+                    traduzido = "move sp,bp";
+                    clock++;
+                    break;
+                case 13:// "add ax,bx"
+                    ax = ax + bx;
+                    traduzido = "add ax,bx";
+                    clock++;
+                    break;
+                case 14:// "add ax,cx"
+                    ax = ax + cx;
+                    traduzido = "add ax,cx";
+                    clock++;
+                    break;
+                case 15:// "add bx,cx"
+                    bx = bx + cx;
+                    traduzido = "add bx,cx";
+                    clock++;
+                    break;
+                case 16:// "sub ax,bx"
+                    ax = ax - bx;
+                    traduzido = "sub ax,bx";
+                    clock++;
+                    break;
+                case 17:// "sub ax,cx"
+                    ax = ax - cx;
+                    traduzido = "sub ax,cx";
+                    clock++;
+                    break;
+                case 18:// "sub bx,cx"
+                    bx = bx - cx;
+                    traduzido = "sub bx,cx";
+                    clock++;
+                    break;
+                case 19:// "inc ax"
+                    ax++;
+                    traduzido = "inc ax";
+                    clock++;
+                    break;
+                case 20:// "inc bx"
+                    bx++;
+                    traduzido = "inc bx";
+                    clock++;
+                    break;
+                case 21:// "inc cx"
+                    cx++;
+                    traduzido = "inc cx";
+                    clock++;
+                    break;
+                case 22:// "dec ax"
+                    ax--;
+                    traduzido = "dec ax";
+                    clock++;
+                    break;
+                case 23:// "dec bx"
+                    bx--;
+                    traduzido = "dec bx";
+                    clock++;
+                    break;
+                case 24:// "dec cx"
+                    cx--;
+                    traduzido = "dec cx";
+                    clock++;
+                    break;
+                case 25:// "test ax0,"
+                    traduzido = "test ax0," + mem[line + 1];
+                    if (ax == 0) {
+                        //                      line = enderecoDeCarga + mem[line + 1] - 1; // -1 para compensar o line++ no laco
+                    } else {
+                        clock = clock + 2;
+                        line++;
+                    }
+                    clock++;
+                    break;
+                case 26:// "jmp "
+                    tmpLine = enderecoDeCarga + mem[line + 1];
+                    traduzido = "jmp " + tmpLine;
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 27:// "call"
+                    mem[sp] = (short) (line + 2);
+                    sp--;
+                    line = enderecoDeCarga + mem[line + 1];
+                    traduzido = "call " + line;
+                    line--; // para compensar a alteracao de ip
+                    clock++;
+                    break;
+                case 28:// "ret"
+                    traduzido = "ret";
+                    sp++;
+                    line = mem[sp];
+                    line--;
+                    clock++;
+                    break;
+                case 29:// "in ax"
+                    traduzido = "in ax";
+                    clock++;
+                    break;
+                case 30:// "out ax"
+                    traduzido = "AX=" + ax;
+                    clock++;
+                    break;
+                case 31:// "push ax"
+                    traduzido = "push ax";
+                    mem[sp] = (short) ax;
+                    sp--;
+                    clock++;
+                    break;
+                case 32:// "push bx"
+                    traduzido = "push bx";
+                    mem[sp] = (short) bx;
+                    sp--;
+                    clock++;
+                    break;
+                case 33:// "push cx"
+                    traduzido = "push cx";
+                    mem[sp] = (short) cx;
+                    sp--;
+                    clock++;
+                    break;
+                case 34:// "push bp"
+                    traduzido = "push bp";
+                    mem[sp] = (short) bp;
+                    sp--;
+                    clock++;
+                    break;
+                case 35:// "pop bp"
+                    traduzido = "pop bp";
+                    sp++;
+                    bp = mem[sp];
+                    clock++;
+                    break;
+                case 36:// "pop cx"
+                    traduzido = "pop cx";
+                    sp++;
+                    cx = mem[sp];
+                    clock++;
+                    break;
+                case 37:// "pop bx"
+                    traduzido = "pop bx";
+                    sp++;
+                    bx = mem[sp];
+                    clock++;
+                    break;
+                case 38:// "pop ax"
+                    traduzido = "pop ax";
+                    sp++;
+                    ax = mem[sp];
+                    clock++;
+                    break;
+                case 39:// "nop"
+                    traduzido = "nop";
+                    clock++;
+                    break;
+                case 40: // "halt"
+                    traduzido = "halt";
+                    clock++;
+                    break;
+                case 41:// "dec sp"
+                    traduzido = "dec sp";
+                    sp--;
+                    clock++;
+                    break;
+                case 42:// "move [bp-"
+                    traduzido = "move [bp-" + ax + "]";
+                    mem[enderecoDeCarga + bp - mem[line + 1]] = (short) ax;
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 43:// "move [bp+"
+                    traduzido = "move [bp+" + ax + "]";
+                    mem[enderecoDeCarga + bp + mem[line + 1]] = (short) ax;
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 44:// "move ax,{"
+                    ax = mem[line + 1];
+                    traduzido = "move ax,{" + ax + "}";
+                    clock = clock + 2;
+                    line++;
+                    break;
+                case 45:// "test axEqbx,"
+                    traduzido = "test axEqbx,";
+                    if (ax == bx) {
+                        line = mem[line + 1] - 1;
+                    } else {
+                        clock = clock + 2;
+                        line++;
+                    }
+                    clock++;
+                    break;
+                case 46:// "inc sp"
+                    traduzido = "inc sp";
+                    sp++;
+                    clock++;
+                    break;
+                case 47:// "move ax,sp"
+                    traduzido = "move ax,sp";
+                    ax = sp;
+                    clock++;
+                    break;
+                case 48:// "move sp,ax"
+                    traduzido = "move sp,ax";
+                    sp = ax;
+                    clock++;
+                    break;
+                case 49:// "move ax,bp"
+                    traduzido = "move ax,bp";
+                    ax = bp;
+                    clock++;
+                    break;
+                case 50:// "move bp,ax"
+                    traduzido = "move bp,ax";
+                    bp = ax;
+                    clock++;
+                    break;
+                case 51:// "iret"
+                    traduzido = "iret";
+                    // "pop cx"
+                    sp++;
+                    cx = mem[sp];
+                    // "pop bx"
+                    sp++;
+                    bx = mem[sp];
+                    // "pop ax"
+                    sp++;
+                    ax = mem[sp];
+                    // "pop bp"
+                    sp++;
+                    bp = mem[sp];
+                    // "ret"
+                    sp++;
+                    line = mem[sp];
+                    line--;
+                    clock++;
+                    break;
+                case 52:// "int"
+                    traduzido = "int";
+                    // "push ip"
+                    mem[sp] = (short) (line + 2);
+                    sp--;
+                    // "push bp"
+                    mem[sp] = (short) bp;
+                    sp--;
+                    // "push ax"
+                    mem[sp] = (short) ax;
+                    sp--;
+                    // "push bx"
+                    mem[sp] = (short) bx;
+                    sp--;
+                    // "push cx"
+                    mem[sp] = (short) cx;
+                    sp--;
+                    line = mem[enderecoDeCarga + mem[line + 1]];
+                    line--;
+                    clock++;
+                    break;
+                case 53:// "sub bx,ax"
+                    bx = bx - ax;
+                    traduzido = "sub bx,ax";
+                    clock++;
+                    break;
+                default:
+                    traduzido = "saiu";
+                    System.out.println("Saiu");
+                    if (line >= mem.length) {
+                        System.out.println("ERRO: a memoria nao pode ser lida");
+                        traduzido = "ERRO: a memoria nao pode ser lida";
+                    }
+                    clock++;
+                    break;
+            }
+        }
+        Arquivo.escreve(new File("clockprograma" + programa + ".txt"), String.valueOf(clock));
+    }
+
 }

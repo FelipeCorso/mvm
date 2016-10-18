@@ -767,6 +767,18 @@ public class MainMVM {
                 break;
         }
         MVM.tradutor(mem, quantidadeInstrucoes, enderecoDeCarga, programa, uiView);
+        clock(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
+    }
+
+    /**
+     * Função que escreve em arquivo
+     * 
+     * @param mem
+     * @param quantidadeInstrucoes
+     * @param enderecoDeCarga
+     */
+    public void clock(short[] mem, int quantidadeInstrucoes, int enderecoDeCarga, int programa) {
+        MVM.gerarClock(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
     }
 
 }
