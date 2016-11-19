@@ -32,6 +32,15 @@ public class MainMVM {
             BufferedReader src = loadProgram.readFile(file);
             String line = null;
             while ((line = src.readLine()) != null) {
+
+                //                isPressRun = readButtonRun();
+                //                if (!isPressRun) {
+                //                    isPressStep = readButton();
+                //                    while (!isPressStep) {
+                //                        isPressStep = readButton();
+                //                    }
+                //                }
+
                 memAux = loadProgram.readLine(line);
             }
             src.close();
