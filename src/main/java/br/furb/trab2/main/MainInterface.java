@@ -1,4 +1,4 @@
-package br.furb.mvm.ui;
+package br.furb.trab2.main;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -27,9 +27,8 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.text.StyledDocument;
 
 import br.furb.mvm.Arquivo;
-import br.furb.mvm.MainMVM;
 
-public class Interface extends JFrame {
+public class MainInterface extends JFrame {
 
     private static final int INVALID_PROGRAM = -1;
     private static final long serialVersionUID = -5095957758803292405L;
@@ -50,9 +49,12 @@ public class Interface extends JFrame {
             @Override
             public void run() {
                 try {
-                    Interface frame = new Interface();
+                    MainInterface frame = new MainInterface();
                     frame.setVisible(true);
-                    //                    frame.mainMVM = new MainMVM(frame);
+                    frame.mainMVM = new MainMVM(frame);
+
+                    frame.mainMVM.executar(new File("steps.txt"), 0);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -66,7 +68,7 @@ public class Interface extends JFrame {
      * @param serverTime
      */
 
-    public Interface() {
+    public MainInterface() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 400);
 
@@ -125,7 +127,7 @@ public class Interface extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                mainMVM.traduzir(getProgram(), getEnderecoCarga());
+                mainMVM.traduzir(getProgram(), 0);
                 textPane.setText(Arquivo.le(new File("programa" + getProgram() + ".txt")));
             }
         });
@@ -185,10 +187,4 @@ public class Interface extends JFrame {
         return INVALID_PROGRAM;
     }
 
-    public int getEnderecoCarga() {
-        if (!txfLoadAddress.getText().equals("")) {
-            return Integer.parseInt(txfLoadAddress.getText());
-        }
-        return 0;
-    }
 }
