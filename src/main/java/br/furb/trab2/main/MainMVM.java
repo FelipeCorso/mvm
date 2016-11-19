@@ -1,12 +1,21 @@
-package br.furb.mvm;
+package br.furb.trab2.main;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 
-import br.furb.mvm.trabalho.LoadProgram;
-import br.furb.trab2.main.MainInterface;
+import br.furb.mvm.MVM;
 
+/*
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
+ * 
+ * TODO TEM QUE ADD O BOTÃO PARA SALVAR AO INVES DE EXECUTAR
+ */
+/**
+ *
+ * @author
+ */
 public class MainMVM {
 
     private MainInterface uiView;
@@ -18,10 +27,23 @@ public class MainMVM {
     public void executar(File file, int loadAddress) {
         try {
             short mem[] = new short[1025];
-            LoadProgram main = new LoadProgram();
-            BufferedReader bufferFileSrc = main.readFile(file);
-            mem = main.readLines(bufferFileSrc, loadAddress);
-            bufferFileSrc.close();
+            short memAux[] = new short[1025];
+            LoadProgram loadProgram = new LoadProgram();
+            BufferedReader src = loadProgram.readFile(file);
+            String line = null;
+            while ((line = src.readLine()) != null) {
+
+                //                isPressRun = readButtonRun();
+                //                if (!isPressRun) {
+                //                    isPressStep = readButton();
+                //                    while (!isPressStep) {
+                //                        isPressStep = readButton();
+                //                    }
+                //                }
+
+                memAux = loadProgram.readLine(line);
+            }
+            src.close();
             MVM.decodificador(mem, 0, loadAddress, uiView);
         } catch (IOException e) {
             throw new RuntimeException(e);

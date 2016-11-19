@@ -4,11 +4,11 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import br.furb.mvm.ui.Interface;
 /*
  * To change this template, choose Tools | Templates and open the template in
  * the editor.
  */
+import br.furb.trab2.main.MainInterface;
 
 /**
  *
@@ -23,7 +23,7 @@ public class MVM {
         decodificador(mem, programa, aux, null);
     }
 
-    public static void decodificador(short mem[], int programa, int aux, Interface uiView) {
+    public static void decodificador(short mem[], int programa, int aux, MainInterface uiView) {
         int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri;
         boolean repetir = true;
         ip = 0 + aux;
@@ -531,7 +531,7 @@ public class MVM {
         tradutor(mem, numeroBytes, enderecoDeCarga, programa, null);
     }
 
-    public static void tradutor(short mem[], int numeroBytes, int enderecoDeCarga, int programa, Interface uiView) {
+    public static void tradutor(short mem[], int numeroBytes, int enderecoDeCarga, int programa, MainInterface uiView) {
         int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ri;
         StringBuilder strBuilder = new StringBuilder();
         String traduzido = "";

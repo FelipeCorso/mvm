@@ -1,0 +1,5 @@
+init ax
+move ax,{3}
+inc ax
+move [2],ax
+halt
