@@ -43,6 +43,23 @@ public class MainMVM {
         int enderecoDeCarga = enderecoCarga;
         int quantidadeInstrucoes = 0;
         switch (programa) {
+            case -1:
+                mem[0 + enderecoDeCarga] = 0; // init ax
+                mem[1 + enderecoDeCarga] = 44; // move ax,{50}
+                mem[2 + enderecoDeCarga] = 50; // 
+                mem[3 + enderecoDeCarga] = 48; // move sp,ax
+                mem[4 + enderecoDeCarga] = 44; // move ax,{11}
+                mem[5 + enderecoDeCarga] = 11; // 
+                mem[6 + enderecoDeCarga] = 9; // move [0],ax
+                mem[7 + enderecoDeCarga] = 0; // 
+                mem[8 + enderecoDeCarga] = 52; // int 0 
+                mem[9 + enderecoDeCarga] = 0; // 
+                mem[10 + enderecoDeCarga] = 40; // halt  
+                mem[11 + enderecoDeCarga] = 30; // out ax
+                mem[12 + enderecoDeCarga] = 26; // jmp 10 
+                mem[13 + enderecoDeCarga] = 10; // 
+                quantidadeInstrucoes = 14;
+                break;
             case 0:
                 mem[0 + enderecoDeCarga] = 0; // init ax
                 mem[1 + enderecoDeCarga] = 26; // jmp 0
