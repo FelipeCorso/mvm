@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 import br.furb.mvm.ui.CompilerInterface;
 
-public abstract class AcaoCompilar extends JButton implements Acao {
+public abstract class AcaoExecutar extends JButton implements Acao {
 
     /**
      * 
@@ -12,12 +12,16 @@ public abstract class AcaoCompilar extends JButton implements Acao {
     private static final long serialVersionUID = -5927631739431915460L;
     private static Object semantico;
 
-    public AcaoCompilar(String texto) {
+    public AcaoExecutar(String texto) {
         super(texto);
     }
 
-    public AcaoCompilar() {
+    public AcaoExecutar() {
         super();
+    }
+
+    public static void executar(CompilerInterface frame, String nomeArquivo, String msgStatus) {
+        //        mainMVM.executar();
     }
 
     public static boolean compilar(CompilerInterface frame, String nomeArquivo, String msgStatus) {
@@ -99,4 +103,5 @@ public abstract class AcaoCompilar extends JButton implements Acao {
     public static Object getSemantico() {
         return null;
     }
+
 }

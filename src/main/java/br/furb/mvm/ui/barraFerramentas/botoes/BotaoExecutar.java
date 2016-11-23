@@ -1,27 +1,28 @@
 package br.furb.mvm.ui.barraFerramentas.botoes;
 
 import br.furb.mvm.ui.CompilerInterface;
-import br.furb.mvm.ui.barraFerramentas.acao.AcaoCompilar;
+import br.furb.mvm.ui.barraFerramentas.acao.AcaoExecutar;
 
-public class BotaoCompilar extends AcaoCompilar {
+public class BotaoExecutar extends AcaoExecutar {
 
     private static final long serialVersionUID = 1L;
     //    BuscaClasse buscaClasse = new BuscaClasse();
 
-    public BotaoCompilar() {
+    public BotaoExecutar() {
         super();
     }
 
-    public BotaoCompilar(String texto) {
+    public BotaoExecutar(String texto) {
         super(texto);
     }
 
     @Override
     public void executaAcao(CompilerInterface frame) {
         if (!frame.getTextEditor().getText().isEmpty()) {
-            AcaoCompilar.compilar(frame, "", "\tPrograma compilado com sucesso!");
+            // FIXME: chamar rotina para executar o programa
+            AcaoExecutar.executar(frame, "", "\tPrograma executado com sucesso!");
         } else {
-            frame.getTextMsg().setText("Nenhum programa para compilar!");
+            frame.getTextMsg().setText("Nenhum programa para executar!");
         }
     }
 

@@ -5,14 +5,13 @@ import java.awt.event.KeyListener;
 
 import br.furb.mvm.trabalho.EStatus;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoAbrir;
-import br.furb.mvm.ui.barraFerramentas.botoes.BotaoColar;
-import br.furb.mvm.ui.barraFerramentas.botoes.BotaoCompilar;
-import br.furb.mvm.ui.barraFerramentas.botoes.BotaoCopiar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoEquipe;
-import br.furb.mvm.ui.barraFerramentas.botoes.BotaoGerarCodigo;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoExecutar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoNovo;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoRecortar;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoResume;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoSalvar;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoStep;
 
 public class ShortCutListener implements KeyListener {
 
@@ -45,12 +44,12 @@ public class ShortCutListener implements KeyListener {
                 break;
             case KeyEvent.VK_C:
                 if (isCtrlDown) {
-                    new BotaoCopiar().executaAcao(compUi);
+                    new BotaoResume().executaAcao(compUi);
                 }
                 break;
             case KeyEvent.VK_V:
                 if (isCtrlDown) {
-                    new BotaoColar().executaAcao(compUi);
+                    new BotaoStep().executaAcao(compUi);
                 }
                 break;
             case KeyEvent.VK_X:
@@ -58,11 +57,11 @@ public class ShortCutListener implements KeyListener {
                     new BotaoRecortar().executaAcao(compUi);
                 }
                 break;
-            case KeyEvent.VK_F8:
-                new BotaoCompilar().executaAcao(compUi);
+            case KeyEvent.VK_F6:
+                new BotaoStep().executaAcao(compUi);
                 break;
-            case KeyEvent.VK_F9:
-                new BotaoGerarCodigo().executaAcao(compUi);
+            case KeyEvent.VK_F12:
+                new BotaoExecutar().executaAcao(compUi);
                 break;
             case KeyEvent.VK_F1:
                 new BotaoEquipe().executaAcao(compUi);

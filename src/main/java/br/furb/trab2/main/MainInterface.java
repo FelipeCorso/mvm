@@ -1,6 +1,5 @@
 package br.furb.trab2.main;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -43,24 +42,26 @@ public class MainInterface extends JFrame {
      * Launch the application.
      */
 
+    /*
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
-
+    
             @Override
             public void run() {
                 try {
                     MainInterface frame = new MainInterface();
                     frame.setVisible(true);
                     frame.mainMVM = new MainMVM(frame);
-
+    
                     frame.mainMVM.executar(new File("steps.txt"), 0);
-
+    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
+    */
 
     /**
      * Create the frame.

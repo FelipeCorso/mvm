@@ -30,18 +30,19 @@ import javax.swing.border.LineBorder;
 
 import br.furb.mvm.trabalho.EStatus;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoAbrir;
-import br.furb.mvm.ui.barraFerramentas.botoes.BotaoCompilar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoEquipe;
-import br.furb.mvm.ui.barraFerramentas.botoes.BotaoGerarCodigo;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoExecutar;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoNovo;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoSalvar;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoStep;
 
 @SuppressWarnings("serial")
 public class CompilerInterface extends JFrame {
 
     private final BotaoAbrir btnCarregar;
     private final BotaoSalvar btnSalvar;
-    private final BotaoCompilar btnRun;
-    private final BotaoGerarCodigo btnStep;
+    private final BotaoExecutar btnResume;
+    private final BotaoStep btnStep;
     private final BotaoEquipe btnEquipe;
     private final JLabel lbStatus;
     private final JTextArea textEditor;
@@ -75,8 +76,9 @@ public class CompilerInterface extends JFrame {
     private JLabel lblNewLabel;
     private JPanel panelLateralFirst;
     private JPanel panelLateralSecond;
-    private BotaoCompilar btnExecutar;
+    private BotaoExecutar btnExecutar;
     private JLabel lblBreakpoints;
+    private JButton btnNovo;
 
     /**
      * Launch the application.
@@ -123,10 +125,11 @@ public class CompilerInterface extends JFrame {
         JPanel panelFerramentas = new JPanel();
         panelCompilador.add(panelFerramentas, BorderLayout.NORTH);
         panelFerramentas.setBorder(new LineBorder(new Color(0, 0, 0)));
-        panelFerramentas.setLayout(new GridLayout(0, 6, 0, 0));
+        panelFerramentas.setLayout(new GridLayout(0, 7, 0, 0));
         panelFerramentas.addKeyListener(keyListener);
 
         btnCarregar = new BotaoAbrir("abrir [ctrl-a]");
+        btnCarregar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/openFile.png")));
         btnCarregar.setText("carregar [ctrl-a]");
         btnCarregar.addMouseListener(new MouseAdapter() {
 
@@ -135,7 +138,7 @@ public class CompilerInterface extends JFrame {
                 btnCarregar.executaAcao(getInstance());
             }
         });
-        btnCarregar.setIcon(getImageIcon("openFile.png"));
+        //        btnCarregar.setIcon(getImageIcon("openFile.png"));
         btnCarregar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnCarregar.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnCarregar.addKeyListener(keyListener);
@@ -143,6 +146,7 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.add(btnCarregar);
 
         btnSalvar = new BotaoSalvar("salvar [ctrl-s]");
+        btnSalvar.setText("salvar [ctrl-s]");
         btnSalvar.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -151,38 +155,54 @@ public class CompilerInterface extends JFrame {
             }
 
         });
-        btnSalvar.setIcon(getImageIcon("save_edit.gif"));
+        btnSalvar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/save_edit.gif")));
         btnSalvar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnSalvar.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnSalvar.addKeyListener(keyListener);
         btnSalvar.setFont(fonte);
         panelFerramentas.add(btnSalvar);
 
-        btnRun = new BotaoCompilar("compilar [F8]");
-        btnRun.setText("run [F8]");
-        btnRun.addMouseListener(new MouseAdapter() {
+        btnNovo = new BotaoNovo("novo [ctrl-n]");
+        btnNovo.setText("novo [ctrl-n]");
+        btnNovo.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/new_con.gif")));
+        btnNovo.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnNovo.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnNovo.addKeyListener(keyListener);
+        btnNovo.setFont(fonte);
+        panelFerramentas.add(btnNovo);
+
+        btnResume = new BotaoExecutar("resume [F8]");
+        btnResume.setText("resume [F8]");
+        btnResume.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                btnRun.executaAcao(getInstance());
+                System.out.println("Ação resume");
             }
         });
-        btnRun.setIcon(getImageIcon("restart_task.gif"));
-        btnRun.setHorizontalTextPosition(SwingConstants.CENTER);
-        btnRun.setVerticalTextPosition(SwingConstants.BOTTOM);
-        btnRun.addKeyListener(keyListener);
+        btnResume.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/restart_task.gif")));
+        btnResume.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnResume.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnResume.addKeyListener(keyListener);
 
-        btnExecutar = new BotaoCompilar("compilar [F8]");
+        btnExecutar = new BotaoExecutar("executar [F12]");
+        btnExecutar.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                btnExecutar.executaAcao(getInstance());
+            }
+        });
         btnExecutar.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnExecutar.setText("executar [F12]");
-        btnExecutar.setIcon(getImageIcon("start_task.gif"));
+        btnExecutar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/start_task.gif")));
         btnExecutar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnExecutar.setFont(new Font("Dialog", Font.BOLD, 11));
         panelFerramentas.add(btnExecutar);
-        btnRun.setFont(fonte);
-        panelFerramentas.add(btnRun);
+        btnResume.setFont(fonte);
+        panelFerramentas.add(btnResume);
 
-        btnStep = new BotaoGerarCodigo("gerar c\u00F3digo [F9]");
+        btnStep = new BotaoStep("step [F6]");
         btnStep.addActionListener(new ActionListener() {
 
             @Override
@@ -197,7 +217,7 @@ public class CompilerInterface extends JFrame {
                 btnStep.executaAcao(getInstance());
             }
         });
-        btnStep.setIcon(getImageIcon("stepover_co.gif"));
+        btnStep.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/stepover_co.gif")));
         btnStep.setHorizontalTextPosition(SwingConstants.CENTER);
         btnStep.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnStep.addKeyListener(keyListener);
@@ -218,7 +238,7 @@ public class CompilerInterface extends JFrame {
                 btnEquipe.executaAcao(getInstance());
             }
         });
-        btnEquipe.setIcon(getImageIcon("information.gif"));
+        btnEquipe.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/information.gif")));
         btnEquipe.setHorizontalTextPosition(SwingConstants.CENTER);
         btnEquipe.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnEquipe.addKeyListener(keyListener);
@@ -377,7 +397,7 @@ public class CompilerInterface extends JFrame {
     }
 
     public JButton getBtnCompilar() {
-        return btnRun;
+        return btnResume;
     }
 
     public JButton getBtnGerarCod() {
