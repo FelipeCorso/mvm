@@ -1,7 +1,14 @@
 package br.furb.mvm.ui.barraFerramentas.acao;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.swing.JButton;
 
+import br.furb.mvm.MVM;
+import br.furb.mvm.MainMVM;
 import br.furb.mvm.ui.CompilerInterface;
 
 public abstract class AcaoExecutar extends JButton implements Acao {
@@ -21,7 +28,58 @@ public abstract class AcaoExecutar extends JButton implements Acao {
     }
 
     public static void executar(CompilerInterface frame, String nomeArquivo, String msgStatus) {
-        //        mainMVM.executar();
+        int loadAddress = 0;
+        // convert String into InputStream
+        InputStream inputStream = new ByteArrayInputStream(frame.getTextEditor().getText().getBytes());
+        // read it with BufferedReader
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        MainMVM mainMVM = new MainMVM(frame);
+
+        if (frame.getTextAreaBreakpoints().getText().length() > 0) {
+            mainMVM.carregar(bufferedReader, loadAddress);
+            String[] breakPoints = frame.getTextAreaBreakpoints().getText().split("\\n");
+            String[] programa = frame.getTextEditor().getText().split("\\n");
+            for (int i = 0; i < programa.length; i++) {
+                /*
+                 * Se o usuário pressionou resume, executa a linha. 
+                 */
+                if (!frame.isResume() && isBreakPointLine(breakPoints, i)) {
+                    // Aguarda ação do usuário
+                    boolean waiting = true;
+                    while (waiting) {
+                        if (frame.isResume()) {
+                            waiting = false;
+                        } else {
+                            if (frame.isStep()) {
+                                waiting = false;
+                            }
+                        }
+                    }
+
+                    frame.setStep(false); // Para forçar a parada no while
+
+                    // Resume e Step executam a linha, a diferença é que o resume não vai mais entrar na rotina.
+                    short[] mem = mainMVM.getInstruction(programa[i]);
+                    MVM.decodificador(mem, 0, loadAddress, frame);
+                } else {
+                    short[] mem = mainMVM.getInstruction(programa[i]);
+                    MVM.decodificador(mem, 0, loadAddress, frame);
+                }
+            }
+
+        } else {
+            mainMVM.executar(bufferedReader, loadAddress);
+        }
+    }
+
+    private static boolean isBreakPointLine(String[] breakPoints, int i) {
+        for (String breakPoint : breakPoints) {
+            // Índice do texteArea começa em zero, soma +1 para ficar de acordo com as linhas exibidas.
+            if (Integer.valueOf(breakPoint) == (i + 1)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean compilar(CompilerInterface frame, String nomeArquivo, String msgStatus) {

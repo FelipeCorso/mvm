@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -22,28 +20,40 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.StyledDocument;
 
 import br.furb.mvm.trabalho.EStatus;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoAbrir;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoColar;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoCopiar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoEquipe;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoExecutar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoNovo;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoRecortar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoSalvar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoStep;
 
 @SuppressWarnings("serial")
 public class CompilerInterface extends JFrame {
 
+    private final BotaoNovo btnNovo;
     private final BotaoAbrir btnCarregar;
     private final BotaoSalvar btnSalvar;
+    private final BotaoCopiar btnCopiar;
+    private final BotaoColar btnColar;
+    private final BotaoRecortar btnRecortar;
     private final BotaoExecutar btnResume;
     private final BotaoStep btnStep;
     private final BotaoEquipe btnEquipe;
+
     private final JLabel lbStatus;
     private final JTextArea textEditor;
     private final JTextArea textMsg;
@@ -78,7 +88,15 @@ public class CompilerInterface extends JFrame {
     private JPanel panelLateralSecond;
     private BotaoExecutar btnExecutar;
     private JLabel lblBreakpoints;
-    private JButton btnNovo;
+    private JTextArea textAreaBreakpoints;
+    private boolean resume;
+    private boolean step;
+    private JTextPane textPaneLog = new JTextPane();
+    private JScrollPane scrollPaneLog;
+    private StyledDocument programLog = textPaneLog.getStyledDocument();
+    private JPanel panelSouth;
+    private JPanel panelLog;
+    private JLabel lblLimpar;
 
     /**
      * Launch the application.
@@ -109,7 +127,7 @@ public class CompilerInterface extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 650);
         setTitle("Compilador");
-        setMinimumSize(new Dimension(800, 650));
+        setMinimumSize(new Dimension(1024, 768));
         setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -125,8 +143,17 @@ public class CompilerInterface extends JFrame {
         JPanel panelFerramentas = new JPanel();
         panelCompilador.add(panelFerramentas, BorderLayout.NORTH);
         panelFerramentas.setBorder(new LineBorder(new Color(0, 0, 0)));
-        panelFerramentas.setLayout(new GridLayout(0, 7, 0, 0));
+        panelFerramentas.setLayout(new GridLayout(0, 10, 0, 0));
         panelFerramentas.addKeyListener(keyListener);
+
+        btnNovo = new BotaoNovo("novo [ctrl-n]");
+        btnNovo.setText("novo [ctrl-n]");
+        btnNovo.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/new_con.gif")));
+        btnNovo.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnNovo.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnNovo.addKeyListener(keyListener);
+        btnNovo.setFont(fonte);
+        panelFerramentas.add(btnNovo);
 
         btnCarregar = new BotaoAbrir("abrir [ctrl-a]");
         btnCarregar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/openFile.png")));
@@ -135,6 +162,8 @@ public class CompilerInterface extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                setResume(false);
+                setStep(false);
                 btnCarregar.executaAcao(getInstance());
             }
         });
@@ -162,14 +191,50 @@ public class CompilerInterface extends JFrame {
         btnSalvar.setFont(fonte);
         panelFerramentas.add(btnSalvar);
 
-        btnNovo = new BotaoNovo("novo [ctrl-n]");
-        btnNovo.setText("novo [ctrl-n]");
-        btnNovo.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/new_con.gif")));
-        btnNovo.setHorizontalTextPosition(SwingConstants.CENTER);
-        btnNovo.setVerticalTextPosition(SwingConstants.BOTTOM);
-        btnNovo.addKeyListener(keyListener);
-        btnNovo.setFont(fonte);
-        panelFerramentas.add(btnNovo);
+        btnCopiar = new BotaoCopiar("copiar [ctrl-c]");
+        btnCopiar.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                btnCopiar.executaAcao(getInstance());
+            }
+        });
+        btnCopiar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/copy_edit_co.gif")));
+        btnCopiar.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnCopiar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnCopiar.addKeyListener(keyListener);
+        btnCopiar.setFont(fonte);
+        panelFerramentas.add(btnCopiar);
+
+        btnColar = new BotaoColar("colar [ctrl-v]");
+        btnColar.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                btnColar.executaAcao(getInstance());
+            }
+        });
+        btnColar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/paste_edit.gif")));
+        btnColar.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnColar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnColar.addKeyListener(keyListener);
+        btnColar.setFont(fonte);
+        panelFerramentas.add(btnColar);
+
+        btnRecortar = new BotaoRecortar("recortar [ctrl-x]");
+        btnRecortar.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                btnRecortar.executaAcao(getInstance());
+            }
+        });
+        btnRecortar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/cut_edit.gif")));
+        btnRecortar.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnRecortar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnRecortar.addKeyListener(keyListener);
+        btnRecortar.setFont(fonte);
+        panelFerramentas.add(btnRecortar);
 
         btnResume = new BotaoExecutar("resume [F8]");
         btnResume.setText("resume [F8]");
@@ -177,7 +242,7 @@ public class CompilerInterface extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Ação resume");
+                setResume(true);
             }
         });
         btnResume.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/restart_task.gif")));
@@ -203,17 +268,12 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.add(btnResume);
 
         btnStep = new BotaoStep("step [F6]");
-        btnStep.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
         btnStep.setText("step [F6]");
         btnStep.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                setStep(true);
                 btnStep.executaAcao(getInstance());
             }
         });
@@ -225,12 +285,6 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.add(btnStep);
 
         btnEquipe = new BotaoEquipe("equipe [F1]");
-        btnEquipe.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
         btnEquipe.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -262,7 +316,7 @@ public class CompilerInterface extends JFrame {
         lblBreakpoints = new JLabel("Breakpoints");
         panelLateralOeste.add(lblBreakpoints, BorderLayout.NORTH);
 
-        JTextArea textAreaBreakpoints = new JTextArea();
+        textAreaBreakpoints = new JTextArea();
         JScrollPane scrollPaneBreakpoints = new JScrollPane(textAreaBreakpoints);
         panelLateralOeste.add(scrollPaneBreakpoints, BorderLayout.CENTER);
 
@@ -349,12 +403,17 @@ public class CompilerInterface extends JFrame {
         panelEditor.add(textEditor);
         panelCentral.add(scrollPaneEditor, BorderLayout.CENTER);
 
+        panelSouth = new JPanel();
+        panelCentral.add(panelSouth, BorderLayout.SOUTH);
+        panelSouth.setLayout(new GridLayout(2, 1, 0, 0));
+
         panelMsg = new JPanel();
         panelMsg.addKeyListener(keyListener);
         panelMsg.setLayout(new BoxLayout(panelMsg, BoxLayout.X_AXIS));
         panelMsg.setSize(panelMsg.getSize().width, 100);
 
         scrollPaneMsg = new JScrollPane(panelMsg);
+        panelSouth.add(scrollPaneMsg);
         scrollPaneMsg.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPaneMsg.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPaneMsg.addKeyListener(keyListener);
@@ -364,9 +423,41 @@ public class CompilerInterface extends JFrame {
         panelMsg.add(textMsg);
         textMsg.setEditable(false);
         textMsg.setBorder(new LineBorder(new Color(0, 0, 0)));
-        panelCentral.add(scrollPaneMsg, BorderLayout.SOUTH);
         textMsg.addKeyListener(keyListener);
         textMsg.setFont(new Font("Console", Font.PLAIN, 11));
+
+        panelLog = new JPanel();
+        panelSouth.add(panelLog);
+
+        textPaneLog.addKeyListener(keyListener);
+        textPaneLog.setLayout(new BoxLayout(textPaneLog, BoxLayout.X_AXIS));
+        textPaneLog.setSize(textPaneLog.getSize().width, 100);
+
+        DefaultCaret caret = (DefaultCaret) textPaneLog.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+        panelLog.setLayout(new BorderLayout(0, 0));
+
+        scrollPaneLog = new JScrollPane(textPaneLog);
+        panelLog.add(scrollPaneLog);
+        scrollPaneLog.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPaneLog.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneLog.addKeyListener(keyListener);
+        scrollPaneLog.setPreferredSize(new Dimension(0, 100));
+
+        lblLimpar = new JLabel("Limpar");
+        lblLimpar.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    programLog.remove(0, programLog.getLength());
+                } catch (BadLocationException ble) {
+                    ble.printStackTrace();
+                }
+            }
+        });
+        panelLog.add(lblLimpar, BorderLayout.SOUTH);
 
         panelFooter = new JPanel();
         panelCompilador.add(panelFooter, BorderLayout.SOUTH);
@@ -382,6 +473,18 @@ public class CompilerInterface extends JFrame {
         lbFilePath.addKeyListener(keyListener);
         panelFooter.add(lbFilePath);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    }
+
+    public void addProgramLog(String log) {
+        try {
+            programLog.insertString(programLog.getLength(), log + "\n", null);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public JTextArea getTextAreaBreakpoints() {
+        return textAreaBreakpoints;
     }
 
     private CompilerInterface getInstance() {
@@ -438,6 +541,22 @@ public class CompilerInterface extends JFrame {
             return (ShortCutListener) keyListener;
         }
         return new ShortCutListener(this);
+    }
+
+    public boolean isResume() {
+        return resume;
+    }
+
+    public void setResume(boolean resume) {
+        this.resume = resume;
+    }
+
+    public boolean isStep() {
+        return step;
+    }
+
+    public void setStep(boolean step) {
+        this.step = step;
     }
 
 }

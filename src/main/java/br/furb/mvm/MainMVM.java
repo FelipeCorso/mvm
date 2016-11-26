@@ -5,22 +5,67 @@ import java.io.File;
 import java.io.IOException;
 
 import br.furb.mvm.trabalho.LoadProgram;
-import br.furb.trab2.main.MainInterface;
+import br.furb.mvm.ui.CompilerInterface;
 
 public class MainMVM {
 
-    private MainInterface uiView;
+    private CompilerInterface uiView;
+    private short mem[] = new short[1025];
+    private int loadAddress;
 
-    public MainMVM(MainInterface uiView) {
+    public MainMVM() {
+
+    }
+
+    public MainMVM(CompilerInterface uiView) {
         this.uiView = uiView;
+    }
+
+    /**
+     * Retorna um array apenas com a instrução passada por parâmetro.
+     * 
+     * @param loadAdress
+     * @param instruction
+     * @return
+     */
+    public short[] getInstruction(String instruction) {
+        short memInstruction[] = new short[1025];
+        int loadAddress = 0;
+        loadAddress = LoadProgram.loadInstructionToMemory(memInstruction, loadAddress, instruction);
+        // Adiciona uma instrução inválida para sair da execução
+        loadAddress = LoadProgram.loadInstructionToMemory(memInstruction, loadAddress, "-1");
+        return memInstruction;
+    }
+
+    public void carregar(File file, int loadAddress) {
+        try {
+            BufferedReader bufferedReader = LoadProgram.readFile(file);
+            carregar(bufferedReader, loadAddress);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void carregar(BufferedReader bufferedReader, int loadAddress) {
+        try {
+            this.loadAddress = loadAddress;
+            mem = LoadProgram.readLines(bufferedReader, loadAddress);
+            bufferedReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void executar(BufferedReader bufferedReader, int loadAddress) {
+        carregar(bufferedReader, loadAddress);
+        MVM.decodificador(mem, 0, loadAddress, uiView);
     }
 
     public void executar(File file, int loadAddress) {
         try {
             short mem[] = new short[1025];
-            LoadProgram main = new LoadProgram();
-            BufferedReader bufferFileSrc = main.readFile(file);
-            mem = main.readLines(bufferFileSrc, loadAddress);
+            BufferedReader bufferFileSrc = LoadProgram.readFile(file);
+            mem = LoadProgram.readLines(bufferFileSrc, loadAddress);
             bufferFileSrc.close();
             MVM.decodificador(mem, 0, loadAddress, uiView);
         } catch (IOException e) {
@@ -786,6 +831,22 @@ public class MainMVM {
      */
     public void clock(short[] mem, int quantidadeInstrucoes, int enderecoDeCarga, int programa) {
         MVM.gerarClock(mem, quantidadeInstrucoes, enderecoDeCarga, programa);
+    }
+
+    public short[] getMem() {
+        return mem;
+    }
+
+    public void setMem(short[] mem) {
+        this.mem = mem;
+    }
+
+    public int getLoadAddress() {
+        return loadAddress;
+    }
+
+    public void setLoadAddress(int loadAddress) {
+        this.loadAddress = loadAddress;
     }
 
 }

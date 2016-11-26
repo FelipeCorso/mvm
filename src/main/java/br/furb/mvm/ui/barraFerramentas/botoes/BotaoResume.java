@@ -19,6 +19,6 @@ public class BotaoResume extends JButton implements Acao {
 
     @Override
     public void executaAcao(CompilerInterface frame) {
-        // TODO: resume action
+        frame.setResume(true);
     }
 }

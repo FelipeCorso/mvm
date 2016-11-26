@@ -5,11 +5,12 @@ import java.awt.event.KeyListener;
 
 import br.furb.mvm.trabalho.EStatus;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoAbrir;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoColar;
+import br.furb.mvm.ui.barraFerramentas.botoes.BotaoCopiar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoEquipe;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoExecutar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoNovo;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoRecortar;
-import br.furb.mvm.ui.barraFerramentas.botoes.BotaoResume;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoSalvar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoStep;
 
@@ -44,12 +45,12 @@ public class ShortCutListener implements KeyListener {
                 break;
             case KeyEvent.VK_C:
                 if (isCtrlDown) {
-                    new BotaoResume().executaAcao(compUi);
+                    new BotaoCopiar().executaAcao(compUi);
                 }
                 break;
             case KeyEvent.VK_V:
                 if (isCtrlDown) {
-                    new BotaoStep().executaAcao(compUi);
+                    new BotaoColar().executaAcao(compUi);
                 }
                 break;
             case KeyEvent.VK_X:

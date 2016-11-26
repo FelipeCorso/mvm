@@ -29,107 +29,111 @@ public class LoadProgram {
     private static final String TEST_AX_EQ_BX = "test axEqbx,(\\d+)";// test axEqbx,
     private static final String INT = "int (\\d+)";// int
 
-    private Instructions instructions = new Instructions();
-
-    public BufferedReader readFile(File file) throws FileNotFoundException, IOException {
+    public static BufferedReader readFile(File file) throws FileNotFoundException, IOException {
         return new BufferedReader(new FileReader(file));
     }
 
-    public short[] readLines(BufferedReader src, int enderecoCarga) throws IOException {
+    public static short[] readLines(BufferedReader src, int enderecoCarga) throws IOException {
         short mem[] = new short[1025];
         int loadAddress = 0 + enderecoCarga;
         String line;
         while ((line = src.readLine()) != null) {
-            line = line.trim();
-            Instruction instruction = instructions.getInstruction(line);
+            loadAddress = loadInstructionToMemory(mem, loadAddress, line);
+        }
 
-            if (instruction != null) {
-                mem[loadAddress] = instruction.getCode();
+        return mem;
+    }
+
+    public static int loadInstructionToMemory(short[] mem, int loadAddress, String line) {
+        line = line.trim();
+        Instruction instruction = Instructions.getInstance().getInstruction(line);
+
+        if (instruction != null) {
+            mem[loadAddress] = instruction.getCode();
+        } else {
+            Matcher matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION).matcher(line);
+            if (matcher.matches()) {
+                mem[loadAddress] = 5;
+                loadAddress++;
+                mem[loadAddress] = Short.parseShort(matcher.group(1));
             } else {
-                Matcher matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION).matcher(line);
+                matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION_BX_PLUS).matcher(line);
                 if (matcher.matches()) {
-                    mem[loadAddress] = 5;
+                    mem[loadAddress] = 6;
                     loadAddress++;
                     mem[loadAddress] = Short.parseShort(matcher.group(1));
                 } else {
-                    matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION_BX_PLUS).matcher(line);
+                    matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_MINUS).matcher(line);
                     if (matcher.matches()) {
-                        mem[loadAddress] = 6;
+                        mem[loadAddress] = 7;
                         loadAddress++;
                         mem[loadAddress] = Short.parseShort(matcher.group(1));
                     } else {
-                        matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_MINUS).matcher(line);
+                        matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_PLUS).matcher(line);
                         if (matcher.matches()) {
-                            mem[loadAddress] = 7;
+                            mem[loadAddress] = 8;
                             loadAddress++;
                             mem[loadAddress] = Short.parseShort(matcher.group(1));
                         } else {
-                            matcher = Pattern.compile(MOVE_TO_AX_VALUE_MEMORY_POSITION_BP_PLUS).matcher(line);
+                            matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION).matcher(line);
                             if (matcher.matches()) {
-                                mem[loadAddress] = 8;
+                                mem[loadAddress] = 9;
                                 loadAddress++;
                                 mem[loadAddress] = Short.parseShort(matcher.group(1));
                             } else {
-                                matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION).matcher(line);
+                                matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION_BX_PLUS).matcher(line);
                                 if (matcher.matches()) {
-                                    mem[loadAddress] = 9;
+                                    mem[loadAddress] = 10;
                                     loadAddress++;
                                     mem[loadAddress] = Short.parseShort(matcher.group(1));
                                 } else {
-                                    matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION_BX_PLUS).matcher(line);
+                                    matcher = Pattern.compile(TEST_AX0).matcher(line);
                                     if (matcher.matches()) {
-                                        mem[loadAddress] = 10;
+                                        mem[loadAddress] = 25;
                                         loadAddress++;
                                         mem[loadAddress] = Short.parseShort(matcher.group(1));
                                     } else {
-                                        matcher = Pattern.compile(TEST_AX0).matcher(line);
+                                        matcher = Pattern.compile(JMP).matcher(line);
                                         if (matcher.matches()) {
-                                            mem[loadAddress] = 25;
+                                            mem[loadAddress] = 26;
                                             loadAddress++;
                                             mem[loadAddress] = Short.parseShort(matcher.group(1));
                                         } else {
-                                            matcher = Pattern.compile(JMP).matcher(line);
+                                            matcher = Pattern.compile(CALL).matcher(line);
                                             if (matcher.matches()) {
-                                                mem[loadAddress] = 26;
+                                                mem[loadAddress] = 27;
                                                 loadAddress++;
                                                 mem[loadAddress] = Short.parseShort(matcher.group(1));
                                             } else {
-                                                matcher = Pattern.compile(CALL).matcher(line);
+                                                matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION_BP_MINUS).matcher(line);
                                                 if (matcher.matches()) {
-                                                    mem[loadAddress] = 27;
+                                                    mem[loadAddress] = 42;
                                                     loadAddress++;
                                                     mem[loadAddress] = Short.parseShort(matcher.group(1));
                                                 } else {
-                                                    matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION_BP_MINUS).matcher(line);
+                                                    matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION_BP_PLUS).matcher(line);
                                                     if (matcher.matches()) {
-                                                        mem[loadAddress] = 42;
+                                                        mem[loadAddress] = 43;
                                                         loadAddress++;
                                                         mem[loadAddress] = Short.parseShort(matcher.group(1));
                                                     } else {
-                                                        matcher = Pattern.compile(MOVE_AX_TO_MEMORY_POSITION_BP_PLUS).matcher(line);
+                                                        matcher = Pattern.compile(MOVE_TO_AX_VALUE).matcher(line);
                                                         if (matcher.matches()) {
-                                                            mem[loadAddress] = 43;
+                                                            mem[loadAddress] = 44;
                                                             loadAddress++;
                                                             mem[loadAddress] = Short.parseShort(matcher.group(1));
                                                         } else {
-                                                            matcher = Pattern.compile(MOVE_TO_AX_VALUE).matcher(line);
+                                                            matcher = Pattern.compile(TEST_AX_EQ_BX).matcher(line);
                                                             if (matcher.matches()) {
-                                                                mem[loadAddress] = 44;
+                                                                mem[loadAddress] = 45;
                                                                 loadAddress++;
                                                                 mem[loadAddress] = Short.parseShort(matcher.group(1));
                                                             } else {
-                                                                matcher = Pattern.compile(TEST_AX_EQ_BX).matcher(line);
+                                                                matcher = Pattern.compile(INT).matcher(line);
                                                                 if (matcher.matches()) {
-                                                                    mem[loadAddress] = 45;
+                                                                    mem[loadAddress] = 52;
                                                                     loadAddress++;
                                                                     mem[loadAddress] = Short.parseShort(matcher.group(1));
-                                                                } else {
-                                                                    matcher = Pattern.compile(INT).matcher(line);
-                                                                    if (matcher.matches()) {
-                                                                        mem[loadAddress] = 52;
-                                                                        loadAddress++;
-                                                                        mem[loadAddress] = Short.parseShort(matcher.group(1));
-                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -144,10 +148,9 @@ public class LoadProgram {
                     }
                 }
             }
-
-            loadAddress++;
         }
 
-        return mem;
+        loadAddress++;
+        return loadAddress;
     }
 }

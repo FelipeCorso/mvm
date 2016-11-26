@@ -19,8 +19,17 @@ public class BotaoExecutar extends AcaoExecutar {
     @Override
     public void executaAcao(CompilerInterface frame) {
         if (!frame.getTextEditor().getText().isEmpty()) {
-            // FIXME: chamar rotina para executar o programa
-            AcaoExecutar.executar(frame, "", "\tPrograma executado com sucesso!");
+            Runnable executar = new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        AcaoExecutar.executar(frame, "", "\tPrograma executado com sucesso!");
+                    } catch (Exception e) {}
+
+                }
+            };
+            new Thread(executar).start();
         } else {
             frame.getTextMsg().setText("Nenhum programa para executar!");
         }
