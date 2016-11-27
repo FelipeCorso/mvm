@@ -86,7 +86,6 @@ public class Instructions {
         instructions.add(new Instruction("move bp,ax", 50));
         instructions.add(new Instruction("iret", 51));
         instructions.add(new Instruction("int", 52));
-        instructions.add(new Instruction("-1", -1)); // Instrução inválida para sair da execução
     }
 
 }

@@ -24,6 +24,8 @@ public class BotaoExecutar extends AcaoExecutar {
                 @Override
                 public void run() {
                     try {
+                        frame.setResume(false);
+                        frame.setStep(false);
                         AcaoExecutar.executar(frame, "", "\tPrograma executado com sucesso!");
                     } catch (Exception e) {}
 

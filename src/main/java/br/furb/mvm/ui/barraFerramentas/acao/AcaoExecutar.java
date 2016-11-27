@@ -34,6 +34,7 @@ public abstract class AcaoExecutar extends JButton implements Acao {
         // read it with BufferedReader
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         MainMVM mainMVM = new MainMVM(frame);
+        MVM.resetReg();
 
         if (frame.getTextAreaBreakpoints().getText().length() > 0) {
             mainMVM.carregar(bufferedReader, loadAddress);
@@ -59,11 +60,9 @@ public abstract class AcaoExecutar extends JButton implements Acao {
                     frame.setStep(false); // Para forçar a parada no while
 
                     // Resume e Step executam a linha, a diferença é que o resume não vai mais entrar na rotina.
-                    short[] mem = mainMVM.getInstruction(programa[i]);
-                    MVM.decodificador(mem, 0, loadAddress, frame);
+                    MVM.decodificador(mainMVM.getMem(), 0, loadAddress, true, frame);
                 } else {
-                    short[] mem = mainMVM.getInstruction(programa[i]);
-                    MVM.decodificador(mem, 0, loadAddress, frame);
+                    MVM.decodificador(mainMVM.getMem(), 0, loadAddress, true, frame);
                 }
             }
 

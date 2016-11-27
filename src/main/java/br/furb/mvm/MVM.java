@@ -12,18 +12,22 @@ import br.furb.mvm.ui.CompilerInterface;
  */
 public class MVM {
 
-    private static int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip;
+    private static int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip = 0;
     public static int botao = 0;
     public StringBuilder programaString = new StringBuilder();
 
     public static void decodificador(short mem[], int programa, int aux) {
-        decodificador(mem, programa, aux, null);
+        decodificador(mem, programa, aux, false, null);
     }
 
     public static void decodificador(short mem[], int programa, int aux, CompilerInterface uiView) {
+        decodificador(mem, programa, aux, false, uiView);
+    }
+
+    public static void decodificador(short mem[], int programa, int aux, boolean execucaoUnica, CompilerInterface uiView) {
         int ri;
         boolean repetir = true;
-        ip = 0 + aux;
+        ip += aux;
         while (repetir) {
             // System.out.println("Valor de IP: " + ip);
             if (botao == 1) {
@@ -525,6 +529,15 @@ public class MVM {
          * System.out.println("Valor de mem[12]: " + mem[12]);
          * System.out.println("Valor de mem[11]: " + mem[11]);
          **/
+    }
+
+    public static void resetReg() {
+        ax = 0;
+        bx = 0;
+        cx = 0;
+        bp = 0;
+        sp = 0;
+        ip = 0;
     }
 
     /**

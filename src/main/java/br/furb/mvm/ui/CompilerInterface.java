@@ -162,8 +162,6 @@ public class CompilerInterface extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                setResume(false);
-                setStep(false);
                 btnCarregar.executaAcao(getInstance());
             }
         });
@@ -242,7 +240,7 @@ public class CompilerInterface extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                setResume(true);
+                btnResume.executaAcao(getInstance());
             }
         });
         btnResume.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/restart_task.gif")));
@@ -273,7 +271,6 @@ public class CompilerInterface extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                setStep(true);
                 btnStep.executaAcao(getInstance());
             }
         });

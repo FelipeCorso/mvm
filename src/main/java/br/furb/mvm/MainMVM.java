@@ -32,8 +32,6 @@ public class MainMVM {
         short memInstruction[] = new short[1025];
         int loadAddress = 0;
         loadAddress = LoadProgram.loadInstructionToMemory(memInstruction, loadAddress, instruction);
-        // Adiciona uma instrução inválida para sair da execução
-        loadAddress = LoadProgram.loadInstructionToMemory(memInstruction, loadAddress, "-1");
         return memInstruction;
     }
 
