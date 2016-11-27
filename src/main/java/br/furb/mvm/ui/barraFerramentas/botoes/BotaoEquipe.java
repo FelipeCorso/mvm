@@ -19,6 +19,6 @@ public class BotaoEquipe extends JButton implements Acao {
 
     @Override
     public void executaAcao(CompilerInterface frame) {
-        frame.getTextMsg().setText("Integrantes Equipe: André Luiz Lunelli, Felipe Loose Corso\n");
+        frame.getTextMsg().setText("Integrantes Equipe: André Luiz Lunelli, Felipe Loose Corso, Rai Vieira Adriano\n");
     }
 }
