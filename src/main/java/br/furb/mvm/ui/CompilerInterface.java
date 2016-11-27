@@ -559,4 +559,28 @@ public class CompilerInterface extends JFrame {
         this.step = step;
     }
 
+    public void setLblAxValue(int ax) {
+        this.lblAxValue.setText(String.valueOf(ax));
+    }
+
+    public void setLblBxValue(int bx) {
+        this.lblBxValue.setText(String.valueOf(bx));
+    }
+
+    public void setLblCxValue(int cx) {
+        this.lblCxValue.setText(String.valueOf(cx));
+    }
+
+    public void setLblSpValue(int sp) {
+        this.lblSpValue.setText(String.valueOf(sp));
+    }
+
+    public void setLblBpValue(int bp) {
+        this.lblBpValue.setText(String.valueOf(bp));
+    }
+
+    public void setLblIpValue(int ip) {
+        this.lblIpValue.setText(String.valueOf(ip));
+    }
+
 }

@@ -497,6 +497,18 @@ public class MVM {
 
             ip++;
             // System.out.println("IP - " + ip);
+
+            if (execucaoUnica) {
+                repetir = false;
+            }
+
+            uiView.setLblAxValue(ax);
+            uiView.setLblBxValue(bx);
+            uiView.setLblCxValue(cx);
+            uiView.setLblSpValue(sp);
+            uiView.setLblBpValue(bp);
+            uiView.setLblIpValue(ip);
+
         }
 
         /**
