@@ -147,7 +147,6 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.addKeyListener(keyListener);
 
         btnNovo = new BotaoNovo("novo [ctrl-n]");
-        btnNovo.setText("novo [ctrl-n]");
         btnNovo.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/new_con.gif")));
         btnNovo.setHorizontalTextPosition(SwingConstants.CENTER);
         btnNovo.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -157,7 +156,6 @@ public class CompilerInterface extends JFrame {
 
         btnCarregar = new BotaoAbrir("abrir [ctrl-a]");
         btnCarregar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/openFile.png")));
-        btnCarregar.setText("carregar [ctrl-a]");
         btnCarregar.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -173,7 +171,6 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.add(btnCarregar);
 
         btnSalvar = new BotaoSalvar("salvar [ctrl-s]");
-        btnSalvar.setText("salvar [ctrl-s]");
         btnSalvar.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -235,7 +232,6 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.add(btnRecortar);
 
         btnResume = new BotaoExecutar("resume [F8]");
-        btnResume.setText("resume [F8]");
         btnResume.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -257,7 +253,6 @@ public class CompilerInterface extends JFrame {
             }
         });
         btnExecutar.setVerticalTextPosition(SwingConstants.BOTTOM);
-        btnExecutar.setText("executar [F12]");
         btnExecutar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/start_task.gif")));
         btnExecutar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnExecutar.setFont(new Font("Dialog", Font.BOLD, 11));
@@ -266,7 +261,6 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.add(btnResume);
 
         btnStep = new BotaoStep("step [F6]");
-        btnStep.setText("step [F6]");
         btnStep.addMouseListener(new MouseAdapter() {
 
             @Override
