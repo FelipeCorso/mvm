@@ -49,11 +49,13 @@ public abstract class AcaoExecutar extends JButton implements Acao {
                     // Aguarda ação do usuário
                     boolean waiting = true;
                     while (waiting) {
-                        if (frame.isResume()) {
-                            waiting = false;
-                        } else {
-                            if (frame.isStep()) {
+                        synchronized(frame) {
+                            if (frame.isResume()) {
                                 waiting = false;
+                            } else {
+                                if (frame.isStep()) {
+                                    waiting = false;
+                                }
                             }
                         }
                     }
