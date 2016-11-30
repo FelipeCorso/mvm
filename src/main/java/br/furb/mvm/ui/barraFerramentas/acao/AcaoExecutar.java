@@ -45,6 +45,7 @@ public abstract class AcaoExecutar extends JButton implements Acao {
                  * Se o usuário pressionou resume, executa a linha. 
                  */
                 if (!frame.isResume() && isBreakPointLine(breakPoints, i)) {
+                    frame.getTextMsg().setText("Aguardando ação do usuário");
                     // Aguarda ação do usuário
                     boolean waiting = true;
                     while (waiting) {
@@ -57,6 +58,7 @@ public abstract class AcaoExecutar extends JButton implements Acao {
                         }
                     }
 
+                    frame.getTextMsg().setText("");
                     frame.setStep(false); // Para forçar a parada no while
 
                     // Resume e Step executam a linha, a diferença é que o resume não vai mais entrar na rotina.
