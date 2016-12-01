@@ -250,6 +250,12 @@ public class CompilerInterface extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 btnExecutar.executaAcao(getInstance());
+                try {
+                    programLog.remove(0, programLog.getLength());
+                } catch (BadLocationException e1) {
+                    // TODO Auto-generated catch block
+                    throw new RuntimeException(e1);
+                }
             }
         });
         btnExecutar.setVerticalTextPosition(SwingConstants.BOTTOM);
