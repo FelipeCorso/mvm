@@ -3,7 +3,7 @@ package br.furb.mvm.ui.barraFerramentas.botoes;
 import javax.swing.JButton;
 
 import br.furb.mvm.trabalho.EStatus;
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 import br.furb.mvm.ui.barraFerramentas.acao.Acao;
 
 public class BotaoColar extends JButton implements Acao {
@@ -19,7 +19,7 @@ public class BotaoColar extends JButton implements Acao {
     }
 
     @Override
-    public void executaAcao(CompilerInterface frame) {
+    public void executaAcao(IDEInterface frame) {
         frame.getTextEditor().paste();
         frame.getLbStatus().setText(EStatus.MODIFICADO.toString());
     }

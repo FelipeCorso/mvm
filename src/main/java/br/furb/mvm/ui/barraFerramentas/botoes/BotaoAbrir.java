@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 
 import br.furb.mvm.trabalho.EStatus;
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 import br.furb.mvm.ui.barraFerramentas.acao.Acao;
 
 public class BotaoAbrir extends JButton implements Acao {
@@ -24,7 +24,7 @@ public class BotaoAbrir extends JButton implements Acao {
     }
 
     @Override
-    public void executaAcao(CompilerInterface frame) {
+    public void executaAcao(IDEInterface frame) {
         String filePath = "";
         FileDialog fileDialog = new FileDialog(frame, "Abrir", FileDialog.LOAD);
         fileDialog.setDirectory("C:\\");

@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 
 import br.furb.mvm.trabalho.EStatus;
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 import br.furb.mvm.ui.barraFerramentas.acao.Acao;
 import br.furb.mvm.ui.barraFerramentas.acao.AcaoSalvar;
 
@@ -24,7 +24,7 @@ public class BotaoSalvar extends JButton implements Acao {
     }
 
     @Override
-    public void executaAcao(CompilerInterface frame) {
+    public void executaAcao(IDEInterface frame) {
         if (frame.getLbStatus().getText().equalsIgnoreCase(EStatus.MODIFICADO.toString())) {
             String absolutePath = frame.getLbFilePath().getText();
 

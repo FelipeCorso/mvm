@@ -2,7 +2,7 @@ package br.furb.mvm.ui.barraFerramentas.botoes;
 
 import javax.swing.JButton;
 
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 import br.furb.mvm.ui.barraFerramentas.acao.Acao;
 
 public class BotaoResume extends JButton implements Acao {
@@ -18,7 +18,7 @@ public class BotaoResume extends JButton implements Acao {
     }
 
     @Override
-    public void executaAcao(CompilerInterface frame) {
+    public void executaAcao(IDEInterface frame) {
         frame.setResume(true);
     }
 }

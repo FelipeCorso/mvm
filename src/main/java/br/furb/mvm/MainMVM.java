@@ -5,11 +5,11 @@ import java.io.File;
 import java.io.IOException;
 
 import br.furb.mvm.trabalho.LoadProgram;
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 
 public class MainMVM {
 
-    private CompilerInterface uiView;
+    private IDEInterface uiView;
     private short mem[] = new short[1025];
     private int loadAddress;
 
@@ -17,7 +17,7 @@ public class MainMVM {
 
     }
 
-    public MainMVM(CompilerInterface uiView) {
+    public MainMVM(IDEInterface uiView) {
         this.uiView = uiView;
     }
 

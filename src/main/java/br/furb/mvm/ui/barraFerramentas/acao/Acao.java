@@ -1,9 +1,9 @@
 package br.furb.mvm.ui.barraFerramentas.acao;
 
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 
 public interface Acao {
 
-    public void executaAcao(CompilerInterface frame);
+    public void executaAcao(IDEInterface frame);
 
 }

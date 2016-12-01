@@ -4,7 +4,7 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 
 /**
  *
@@ -20,11 +20,11 @@ public class MVM {
         decodificador(mem, programa, aux, false, null);
     }
 
-    public static void decodificador(short mem[], int programa, int aux, CompilerInterface uiView) {
+    public static void decodificador(short mem[], int programa, int aux, IDEInterface uiView) {
         decodificador(mem, programa, aux, false, uiView);
     }
 
-    public static void decodificador(short mem[], int programa, int aux, boolean execucaoUnica, CompilerInterface uiView) {
+    public static void decodificador(short mem[], int programa, int aux, boolean execucaoUnica, IDEInterface uiView) {
         int ri;
         boolean repetir = true;
         ip += aux;
@@ -553,7 +553,7 @@ public class MVM {
         tradutor(mem, numeroBytes, enderecoDeCarga, programa, null);
     }
 
-    public static void tradutor(short mem[], int numeroBytes, int enderecoDeCarga, int programa, CompilerInterface uiView) {
+    public static void tradutor(short mem[], int numeroBytes, int enderecoDeCarga, int programa, IDEInterface uiView) {
         int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ri;
         StringBuilder strBuilder = new StringBuilder();
         String traduzido = "";

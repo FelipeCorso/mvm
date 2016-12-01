@@ -1,6 +1,6 @@
 package br.furb.mvm.ui.barraFerramentas.botoes;
 
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 import br.furb.mvm.ui.barraFerramentas.acao.AcaoExecutar;
 
 public class BotaoExecutar extends AcaoExecutar {
@@ -17,7 +17,7 @@ public class BotaoExecutar extends AcaoExecutar {
     }
 
     @Override
-    public void executaAcao(CompilerInterface frame) {
+    public void executaAcao(IDEInterface frame) {
         if (!frame.getTextEditor().getText().isEmpty()) {
             Runnable executar = new Runnable() {
 

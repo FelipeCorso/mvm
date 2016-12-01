@@ -16,10 +16,10 @@ import br.furb.mvm.ui.barraFerramentas.botoes.BotaoStep;
 
 public class ShortCutListener implements KeyListener {
 
-    private CompilerInterface compUi;
+    private IDEInterface compUi;
     private String textEditor;
 
-    public ShortCutListener(CompilerInterface compUi) {
+    public ShortCutListener(IDEInterface compUi) {
         this.compUi = compUi;
         textEditor = "";
     }

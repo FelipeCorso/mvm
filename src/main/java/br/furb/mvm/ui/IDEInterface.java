@@ -42,7 +42,7 @@ import br.furb.mvm.ui.barraFerramentas.botoes.BotaoSalvar;
 import br.furb.mvm.ui.barraFerramentas.botoes.BotaoStep;
 
 @SuppressWarnings("serial")
-public class CompilerInterface extends JFrame {
+public class IDEInterface extends JFrame {
 
     private final BotaoNovo btnNovo;
     private final BotaoAbrir btnCarregar;
@@ -107,7 +107,7 @@ public class CompilerInterface extends JFrame {
             @Override
             public void run() {
                 try {
-                    CompilerInterface frame = new CompilerInterface();
+                    IDEInterface frame = new IDEInterface();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -119,14 +119,14 @@ public class CompilerInterface extends JFrame {
     /**
      * Create the frame.
      */
-    public CompilerInterface() {
+    public IDEInterface() {
         Font fonte = new Font("Dialog", Font.BOLD, 11);
         keyListener = new ShortCutListener(this);
         addKeyListener(keyListener);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 650);
-        setTitle("Compilador");
+        setTitle("MVM - IDE");
         setMinimumSize(new Dimension(1024, 768));
         setLocationRelativeTo(null);
         contentPane = new JPanel();
@@ -147,7 +147,7 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.addKeyListener(keyListener);
 
         btnNovo = new BotaoNovo("novo [ctrl-n]");
-        btnNovo.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/new_con.gif")));
+        btnNovo.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/new_con.gif")));
         btnNovo.setHorizontalTextPosition(SwingConstants.CENTER);
         btnNovo.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnNovo.addKeyListener(keyListener);
@@ -155,7 +155,7 @@ public class CompilerInterface extends JFrame {
         panelFerramentas.add(btnNovo);
 
         btnCarregar = new BotaoAbrir("abrir [ctrl-a]");
-        btnCarregar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/openFile.png")));
+        btnCarregar.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/openFile.png")));
         btnCarregar.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -179,7 +179,7 @@ public class CompilerInterface extends JFrame {
             }
 
         });
-        btnSalvar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/save_edit.gif")));
+        btnSalvar.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/save_edit.gif")));
         btnSalvar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnSalvar.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnSalvar.addKeyListener(keyListener);
@@ -194,7 +194,7 @@ public class CompilerInterface extends JFrame {
                 btnCopiar.executaAcao(getInstance());
             }
         });
-        btnCopiar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/copy_edit_co.gif")));
+        btnCopiar.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/copy_edit_co.gif")));
         btnCopiar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnCopiar.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnCopiar.addKeyListener(keyListener);
@@ -209,7 +209,7 @@ public class CompilerInterface extends JFrame {
                 btnColar.executaAcao(getInstance());
             }
         });
-        btnColar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/paste_edit.gif")));
+        btnColar.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/paste_edit.gif")));
         btnColar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnColar.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnColar.addKeyListener(keyListener);
@@ -224,7 +224,7 @@ public class CompilerInterface extends JFrame {
                 btnRecortar.executaAcao(getInstance());
             }
         });
-        btnRecortar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/cut_edit.gif")));
+        btnRecortar.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/cut_edit.gif")));
         btnRecortar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnRecortar.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnRecortar.addKeyListener(keyListener);
@@ -239,7 +239,7 @@ public class CompilerInterface extends JFrame {
                 btnResume.executaAcao(getInstance());
             }
         });
-        btnResume.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/restart_task.gif")));
+        btnResume.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/restart_task.gif")));
         btnResume.setHorizontalTextPosition(SwingConstants.CENTER);
         btnResume.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnResume.addKeyListener(keyListener);
@@ -259,7 +259,7 @@ public class CompilerInterface extends JFrame {
             }
         });
         btnExecutar.setVerticalTextPosition(SwingConstants.BOTTOM);
-        btnExecutar.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/start_task.gif")));
+        btnExecutar.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/start_task.gif")));
         btnExecutar.setHorizontalTextPosition(SwingConstants.CENTER);
         btnExecutar.setFont(new Font("Dialog", Font.BOLD, 11));
         panelFerramentas.add(btnExecutar);
@@ -274,7 +274,7 @@ public class CompilerInterface extends JFrame {
                 btnStep.executaAcao(getInstance());
             }
         });
-        btnStep.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/stepover_co.gif")));
+        btnStep.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/stepover_co.gif")));
         btnStep.setHorizontalTextPosition(SwingConstants.CENTER);
         btnStep.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnStep.addKeyListener(keyListener);
@@ -289,7 +289,7 @@ public class CompilerInterface extends JFrame {
                 btnEquipe.executaAcao(getInstance());
             }
         });
-        btnEquipe.setIcon(new ImageIcon(CompilerInterface.class.getResource("/Images/information.gif")));
+        btnEquipe.setIcon(new ImageIcon(IDEInterface.class.getResource("/Images/information.gif")));
         btnEquipe.setHorizontalTextPosition(SwingConstants.CENTER);
         btnEquipe.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnEquipe.addKeyListener(keyListener);
@@ -484,7 +484,7 @@ public class CompilerInterface extends JFrame {
         return textAreaBreakpoints;
     }
 
-    private CompilerInterface getInstance() {
+    private IDEInterface getInstance() {
         return this;
     }
 

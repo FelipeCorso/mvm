@@ -9,7 +9,7 @@ import javax.swing.JButton;
 
 import br.furb.mvm.MVM;
 import br.furb.mvm.MainMVM;
-import br.furb.mvm.ui.CompilerInterface;
+import br.furb.mvm.ui.IDEInterface;
 
 public abstract class AcaoExecutar extends JButton implements Acao {
 
@@ -27,7 +27,7 @@ public abstract class AcaoExecutar extends JButton implements Acao {
         super();
     }
 
-    public static void executar(CompilerInterface frame, String nomeArquivo, String msgStatus) {
+    public static void executar(IDEInterface frame, String nomeArquivo, String msgStatus) {
         int loadAddress = 0;
         // convert String into InputStream
         InputStream inputStream = new ByteArrayInputStream(frame.getTextEditor().getText().getBytes());
@@ -85,7 +85,7 @@ public abstract class AcaoExecutar extends JButton implements Acao {
         return false;
     }
 
-    public static boolean compilar(CompilerInterface frame, String nomeArquivo, String msgStatus) {
+    public static boolean compilar(IDEInterface frame, String nomeArquivo, String msgStatus) {
         /*
         Lexico lexico = new Lexico();
         lexico.setInput(frame.getTextEditor().getText());
@@ -137,7 +137,7 @@ public abstract class AcaoExecutar extends JButton implements Acao {
 
     }
 
-    public static void tratarLinhaErroCompilacao(StringBuilder sb, CompilerInterface frame, Exception e) {
+    public static void tratarLinhaErroCompilacao(StringBuilder sb, IDEInterface frame, Exception e) {
         /*
          sb.append("Erro na linha ");
         try {
